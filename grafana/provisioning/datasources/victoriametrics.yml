@@ -1,0 +1,9 @@
+apiVersion: 1
+datasources:
+    - access: proxy
+      editable: true
+      name: victoriametrics
+      orgId: 1
+      type: prometheus
+      url: http://victoriametrics:8428/
+      version: 1
