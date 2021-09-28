@@ -16,7 +16,7 @@ require (
 	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
 	github.com/karalabe/usb v0.0.0-20191104083709-911d15fe12a9 // indirect
 	github.com/mattn/go-runewidth v0.0.12 // indirect
-	github.com/peterbourgon/ff v1.7.0
+	github.com/peterbourgon/ff v1.7.1
 	github.com/prometheus/tsdb v0.10.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rjeczalik/notify v0.9.2 // indirect
