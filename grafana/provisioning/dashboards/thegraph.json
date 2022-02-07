@@ -19,7 +19,7 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": 3,
   "links": [
@@ -29,9 +29,9 @@
       "type": "dashboards"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": null,
       "gridPos": {
         "h": 5,
         "w": 24,
@@ -43,15 +43,13 @@
         "content": "# Delegate to us\n\nYou can support further development by delegating to **stake-machine.eth** (**[0x1692a8710dcf0dce24bd34c028479176b97ee9ef](https://network.thegraph.com/profile?id=0x1692a8710dcf0dce24bd34c028479176b97ee9ef&view=Indexing)**) \n\nAlso you can take a look at our [Indexer Dashboard](https://thegraph.stake-machine.com/d/indexers/thegraph-indexers?orgId=1&refresh=1m&var-indexer=0x1692a8710dcf0dce24bd34c028479176b97ee9ef)",
         "mode": "markdown"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Welcome",
       "type": "text"
     },
@@ -63,7 +61,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "decimals": 0,
       "esGeoPoint": "geohash",
       "esLocationName": "indexer",
@@ -106,8 +107,6 @@
         }
       ],
       "thresholds": "0,10",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexers Map",
       "type": "grafana-worldmap-panel",
       "unitPlural": "",
@@ -115,8 +114,10 @@
       "valueName": "total"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -142,7 +143,6 @@
         "y": 5
       },
       "id": 80,
-      "interval": null,
       "links": [],
       "options": {
         "legend": {
@@ -200,14 +200,15 @@
           "refId": "C"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Network Rewards",
       "type": "piechart"
     },
     {
       "collapsed": false,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -220,7 +221,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "The total amount of GRT staked in the staking contract",
       "fieldConfig": {
         "defaults": {
@@ -260,7 +264,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens",
@@ -269,13 +273,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Staked (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total indexing rewards earned. Including delegators and indexers parts",
       "fieldConfig": {
         "defaults": {
@@ -315,7 +320,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingrewards",
@@ -324,13 +329,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Rewards (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -369,7 +375,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_allocations_active)",
@@ -378,13 +384,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Unallocated Rewards",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -423,7 +430,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalsupply",
@@ -432,13 +439,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Supply (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -477,7 +485,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalsupply * thegraph_grt_usd",
@@ -486,13 +494,14 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Supply (USD)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "The total amount of GRT staked in the staking contract",
       "fieldConfig": {
         "defaults": {
@@ -532,7 +541,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens",
@@ -541,13 +550,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Staked Amount Changed",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "The total amount of GRT staked in the staking contract",
       "fieldConfig": {
         "defaults": {
@@ -590,23 +600,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (sum(thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s + thegraph_graphnetwork_totaldelegatedtokens offset ${__range_s}s))) / sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (sum(thegraph_graphnetwork_totaltokensstaked offset $__range_s + thegraph_graphnetwork_totaldelegatedtokens offset $__range_s))) / sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Staked % Changed",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "The total amount of GRT staked in the staking contract",
       "fieldConfig": {
         "defaults": {
@@ -646,7 +662,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) * thegraph_grt_usd",
@@ -655,13 +671,14 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Staked (USD)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total indexing rewards earned. Including delegators and indexers parts",
       "fieldConfig": {
         "defaults": {
@@ -701,7 +718,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingrewards * thegraph_grt_usd",
@@ -710,13 +727,14 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Rewards (USD)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -755,7 +773,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalgrtminted",
@@ -764,13 +782,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Minted",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -809,7 +828,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalgrtburned",
@@ -818,13 +837,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Burned",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total stake of all indexers on all Subgraph deployments",
       "fieldConfig": {
         "defaults": {
@@ -864,7 +884,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_subgraph_deployment_tokens_staked)",
@@ -874,13 +894,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Tokens Staked in Subgraphs",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total tokens that are currently locked or withdrawable in the network from unstaking",
       "fieldConfig": {
         "defaults": {
@@ -920,7 +941,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalunstakedtokenslocked",
@@ -929,13 +950,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Unstaked Tokens Locked",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -974,7 +996,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_currentepoch",
@@ -983,13 +1005,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Current Epoch",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total query fees taxed by the protocol",
       "fieldConfig": {
         "defaults": {
@@ -1028,7 +1051,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltaxedqueryfees",
@@ -1037,13 +1060,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Taxed Query Fees",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1082,7 +1106,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalunclaimedqueryfeerebates",
@@ -1091,13 +1115,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Unclaimed Query Fees Rebate",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Price from Coingecko",
       "fieldConfig": {
         "defaults": {
@@ -1138,7 +1163,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_grt_usd",
@@ -1148,13 +1173,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "GRT/USD",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total GRT currently in allocation",
       "fieldConfig": {
         "defaults": {
@@ -1194,7 +1220,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensallocated",
@@ -1203,13 +1229,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Allocated",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1248,7 +1275,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_allocations_active_count",
@@ -1257,13 +1284,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Active Allocations",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1301,7 +1329,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_subgraphcount",
@@ -1310,13 +1338,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Subgraphs",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1357,7 +1386,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)",
@@ -1367,13 +1396,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Inflation APY",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total tokens that are settled and waiting to be claimed",
       "fieldConfig": {
         "defaults": {
@@ -1412,7 +1442,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensclaimable",
@@ -1421,13 +1451,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Claimable",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Price from Coingecko",
       "fieldConfig": {
         "defaults": {
@@ -1470,10 +1501,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_grt_usd - thegraph_grt_usd offset ${__range_s}s) / thegraph_grt_usd",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": true,
+          "expr": "(thegraph_grt_usd - thegraph_grt_usd offset $__range_s) / thegraph_grt_usd",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -1481,14 +1517,15 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "GRT/USD Change",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1501,7 +1538,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1540,22 +1580,32 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
+          "exemplar": true,
           "expr": "thegraph_graphnetwork_delegatorcount",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "Total",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "count(thegraph_delegator_tokens_staked)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Active",
+          "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Delegators total",
+      "title": "Delegators",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total query fees rebates claimed by delegators",
       "fieldConfig": {
         "defaults": {
@@ -1595,7 +1645,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaldelegatorqueryfeerebates",
@@ -1604,13 +1654,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Delegator Query Fee Rebates",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1649,7 +1700,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards",
@@ -1658,13 +1709,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Delegators Rewards (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1703,7 +1755,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards * thegraph_grt_usd",
@@ -1712,13 +1764,14 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Delegators Rewards (USD)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total delegated tokens in the protocol",
       "fieldConfig": {
         "defaults": {
@@ -1758,7 +1811,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaldelegatedtokens",
@@ -1767,13 +1820,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Delegated Tokens (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total delegated tokens in the protocol",
       "fieldConfig": {
         "defaults": {
@@ -1813,7 +1867,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaldelegatedtokens * thegraph_grt_usd",
@@ -1822,20 +1876,20 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Delegated Tokens (USD)",
       "type": "stat"
     },
     {
       "aliasColors": {},
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Others",
         "threshold": "0.01"
       },
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
@@ -1845,7 +1899,6 @@
         "y": 36
       },
       "id": 90,
-      "interval": null,
       "legend": {
         "percentage": true,
         "show": true,
@@ -1868,8 +1921,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Delegators",
       "type": "grafana-piechart-panel",
       "valueName": "current"
@@ -1877,12 +1928,14 @@
     {
       "aliasColors": {},
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Others",
         "threshold": "0.01"
       },
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fontSize": "80%",
       "format": "percentunit",
       "gridPos": {
@@ -1892,7 +1945,6 @@
         "y": 44
       },
       "id": 110,
-      "interval": null,
       "legend": {
         "percentage": false,
         "show": true,
@@ -1915,15 +1967,16 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Unrealized Delegators Yield",
       "type": "grafana-piechart-panel",
       "valueName": "current"
     },
     {
       "collapsed": false,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1936,7 +1989,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1975,7 +2031,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensstaked",
@@ -1984,13 +2040,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexers Staked (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2029,7 +2086,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensstaked * thegraph_grt_usd",
@@ -2038,13 +2095,14 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexers Staked (USD)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2083,7 +2141,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingindexerrewards",
@@ -2092,13 +2150,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Indexer Rewards (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2137,7 +2196,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingindexerrewards * thegraph_grt_usd",
@@ -2146,13 +2205,14 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Indexer Rewards (USD)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2191,22 +2251,32 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
+          "exemplar": true,
           "expr": "thegraph_graphnetwork_indexercount",
           "interval": "",
-          "legendFormat": "Indexer Count",
+          "legendFormat": "Total",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "count(group by (indexer) (thegraph_indexer_tokens_staked))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Active",
+          "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total Indexers",
+      "title": "Indexers",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2245,7 +2315,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "count(count by (indexer) (thegraph_allocations_active))",
@@ -2254,13 +2324,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Active Indexers",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2299,7 +2370,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_stakedindexerscount",
@@ -2308,13 +2379,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexer Staked Total",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total query fees rebates claimed by indexers",
       "fieldConfig": {
         "defaults": {
@@ -2354,7 +2426,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexerqueryfeerebates",
@@ -2363,13 +2435,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexer Query Fee Rebates",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total query fees collected by indexers",
       "fieldConfig": {
         "defaults": {
@@ -2409,7 +2482,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexerqueryfeescollected",
@@ -2418,20 +2491,20 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexer Query Fees Collected",
       "type": "stat"
     },
     {
       "aliasColors": {},
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Others",
         "threshold": "0.01"
       },
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
@@ -2441,7 +2514,6 @@
         "y": 61
       },
       "id": 88,
-      "interval": null,
       "legend": {
         "percentage": true,
         "show": true,
@@ -2464,8 +2536,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total tokens Indexers control",
       "type": "grafana-piechart-panel",
       "valueName": "current"
@@ -2473,12 +2543,14 @@
     {
       "aliasColors": {},
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Others",
-        "threshold": "0"
+        "threshold": "0.01"
       },
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
@@ -2488,7 +2560,6 @@
         "y": 61
       },
       "id": 86,
-      "interval": null,
       "legend": {
         "percentage": true,
         "show": true,
@@ -2511,15 +2582,16 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexers Collected Rewards",
       "type": "grafana-piechart-panel",
       "valueName": "current"
     },
     {
       "collapsed": false,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2532,7 +2604,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2574,7 +2649,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_curatorcount",
@@ -2583,13 +2658,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Curators",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total query fees payed to curators",
       "fieldConfig": {
         "defaults": {
@@ -2628,7 +2704,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalcuratorqueryfees",
@@ -2637,13 +2713,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Curator Query Fees",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2682,7 +2759,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensignalled",
@@ -2691,14 +2768,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Signalled",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2722,7 +2799,6 @@
         "y": 70
       },
       "id": 103,
-      "interval": null,
       "links": [],
       "options": {
         "colorMode": "value",
@@ -2739,7 +2815,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_curator_tokens_unsignalled)",
@@ -2749,14 +2825,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Unsignalled",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2780,7 +2856,6 @@
         "y": 70
       },
       "id": 104,
-      "interval": null,
       "links": [],
       "options": {
         "colorMode": "value",
@@ -2797,7 +2872,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_curator_tokens_signalled)",
@@ -2807,13 +2882,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Signalled",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total name signal summed for all bonding curves",
       "fieldConfig": {
         "defaults": {
@@ -2853,7 +2929,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_curator_namesignal_total)",
@@ -2863,14 +2939,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Name Signals",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2894,7 +2970,6 @@
         "y": 74
       },
       "id": 101,
-      "interval": null,
       "links": [],
       "options": {
         "colorMode": "value",
@@ -2911,7 +2986,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_curator_tokens_namesignalled)",
@@ -2921,14 +2996,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Name Signalled",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2952,7 +3027,6 @@
         "y": 74
       },
       "id": 102,
-      "interval": null,
       "links": [],
       "options": {
         "colorMode": "value",
@@ -2969,7 +3043,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sum(thegraph_curator_tokens_nameunsignalled)",
@@ -2979,14 +3053,11 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Name Unsignalled",
       "type": "stat"
     },
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3000,7 +3071,10 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "victoriametrics",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -3055,9 +3129,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Uncollected Rewards by Indexers",
           "tooltip": {
             "shared": true,
@@ -3066,33 +3138,24 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
           "yaxes": [
             {
               "format": "GRT",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
@@ -3100,7 +3163,10 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "victoriametrics",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -3155,9 +3221,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Indexers Reward Rate per Hour",
           "tooltip": {
             "shared": true,
@@ -3166,33 +3230,25 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
           "yaxes": [
             {
               "format": "GRT",
-              "label": null,
               "logBase": 1,
-              "max": null,
               "min": "0",
               "show": true
             },
             {
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         }
       ],
@@ -3201,7 +3257,10 @@
     },
     {
       "collapsed": true,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3215,7 +3274,10 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "victoriametrics",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -3272,9 +3334,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Uncollected Rewards per Active Allocation",
           "tooltip": {
             "shared": true,
@@ -3283,33 +3343,24 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
           "yaxes": [
             {
               "format": "GRT",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         }
       ],
@@ -3318,7 +3369,7 @@
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 30,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3332,5 +3383,6 @@
   "timezone": "",
   "title": "TheGraph - Overview",
   "uid": "-3BUUtbMz",
-  "version": 50
+  "version": 56,
+  "weekStart": ""
 }

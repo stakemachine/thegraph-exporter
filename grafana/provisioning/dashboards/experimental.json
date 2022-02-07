@@ -8,12 +8,18 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 7,
   "links": [
@@ -23,158 +29,181 @@
       "type": "dashboards"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 10,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "hiddenSeries": false,
       "id": 6,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "connected",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "7.3.6",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_indexer_capacity_token - thegraph_indexer_capacity_token offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": true,
+          "expr": "thegraph_indexer_capacity_token - thegraph_indexer_capacity_token offset $__range_s",
           "interval": "",
           "legendFormat": "{{indexer}}",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Indexer Total Stake Change",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
           "unit": "percentunit"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 11,
         "w": 24,
         "x": 0,
         "y": 10
       },
-      "hiddenSeries": false,
       "id": 2,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "connected",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "7.3.6",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "sort(1 - ((1 - sum by (indexer)(thegraph_indexer_fees_rewards_cut / 1000000)) / ((sum by (indexer)(thegraph_delegatedstake_tokens_staked) + sum by (indexer)(thegraph_delegatedstake_rewards_unrealized)) / (sum by (indexer)(thegraph_delegatedstake_tokens_staked) + sum by (indexer)(thegraph_delegatedstake_rewards_unrealized) + sum by (indexer)(thegraph_indexer_tokens_staked)))))",
@@ -185,52 +214,13 @@
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Indexers  Indexing Effective Cut",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percentunit",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
       "Aggregate": "last",
       "BarPadding": 10,
       "BaseLineColor": "#ff0000",
-      "BaseLineValue": null,
       "BaseLineWidth": 1,
       "CurveType": "Monotone",
       "DateFormat": "YYYY-MM-DD HH:mm:ss",
@@ -245,47 +235,42 @@
       "GroupLabelColor": "#ffffff",
       "GroupLabelFontSize": "200%",
       "GroupNameFilter": "",
+      "GroupRenamingRules": [],
       "GroupSortString": "",
       "HighAxisColor": "#ffffff",
       "HighAxisWidth": 1,
-      "HighBarColor": "rgb(120, 128, 0)",
       "HighLimitBarColor": "#ff0000",
       "HighLimitBarFlashColor": "#ffa500",
       "HighLimitBarFlashTimeout": 1000,
       "HighLimitLineColor": "#ff0000",
-      "HighLimitValue": null,
       "HighLmitLineWidth": 1,
       "HighSideMargin": 22,
       "Horizontal": true,
       "LabelColName": "indexer",
       "LabelColor": "#ffffff",
       "LabelFontSize": "100%",
-      "LabelMargin": null,
       "LabelNameFilter": "",
-      "LableAngle": null,
+      "LabelRenamingRules": [],
+      "Legend": false,
       "LineColor": "blue",
       "LineWidth": 5,
       "Links": [],
       "LowAxisColor": "#ffffff",
       "LowAxisWidth": 1,
-      "LowBarColor": "teal",
       "LowLimitBarColor": "#ff0000",
       "LowLimitBarFlashColor": "#ffa500",
       "LowLimitBarFlashTimeout": 200,
       "LowLimitLineColor": "#ff0000",
-      "LowLimitValue": null,
       "LowLmitLineWidth": 1,
       "LowSideMargin": 22,
       "MaxLineColor": "rgb(74, 232, 12)",
-      "MaxLineValue": null,
       "MaxLineWidth": 1,
       "MinLineColor": "#ff0000",
-      "MinLineValue": null,
       "MinLineWidth": 1,
+      "MultiBarPadding": 10,
       "OddRowColor": "rgba(33, 33, 34, 0.92)",
       "OutOfRangeLabelColor": "#ffffff",
       "OutlineColor": "rgba(245, 255, 0, 0.1)",
-      "RecolorColName": null,
       "RecolorHighLimitBar": false,
       "RecolorLowLimitBar": false,
       "RecolorRules": [],
@@ -307,35 +292,25 @@
       "SortColName": "value",
       "SortDirection": "ascending",
       "TZOffsetHours": 0,
+      "ToolTipFontSize": "100%",
+      "ToolTipType": "",
       "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
-      "ValueColName": "Value",
+      "VGroupGap": 5,
       "ValueColor": "#ffffff",
       "ValueDecimals": 2,
       "ValueFontSize": "100%",
       "ValuePosition": "bar end",
-      "datasource": "victoriametrics",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
+      "Values": [
+        {
+          "HighBarColor": "rgb(120, 128, 0)",
+          "LowBarColor": "teal",
+          "Name": "Value",
+          "Selected": true
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
       },
       "gridPos": {
         "h": 45,
@@ -356,14 +331,12 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexers Indexing Effective Cut",
       "type": "michaeldmoore-multistat-panel"
     }
   ],
   "refresh": false,
-  "schemaVersion": 26,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -377,5 +350,6 @@
   "timezone": "",
   "title": "EXPERIMENTAL",
   "uid": "kJPpXYBMk",
-  "version": 9
+  "version": 11,
+  "weekStart": ""
 }

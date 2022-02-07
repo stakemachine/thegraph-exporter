@@ -24,11 +24,6 @@ scrape_configs:
     static_configs:
       - targets: ['thegraph-exporter:8080']
 
-  - job_name: 'vmagent'
-    scrape_interval: 15s
-    static_configs:
-      - targets: ['vmagent:8429']
-
 #  - job_name: 'nginx'
 #    scrape_interval: 10s
 #    static_configs:

@@ -8,12 +8,18 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 8,
   "links": [
@@ -30,10 +36,10 @@
       "url": ""
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -46,7 +52,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -86,7 +95,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens",
@@ -95,13 +104,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Tokens Staked (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -140,23 +150,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_currentepoch - thegraph_graphnetwork_currentepoch offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_currentepoch - thegraph_graphnetwork_currentepoch offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Epochs passed",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -195,7 +211,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalgrtminted",
@@ -204,13 +220,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Minted",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -250,23 +267,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s + thegraph_graphnetwork_totaldelegatedtokens offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (thegraph_graphnetwork_totaltokensstaked offset $__range_s + thegraph_graphnetwork_totaldelegatedtokens offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Tokens Staked per Period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -309,23 +332,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (sum(thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s + thegraph_graphnetwork_totaldelegatedtokens offset ${__range_s}s))) / sum(thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s + thegraph_graphnetwork_totaldelegatedtokens offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (sum(thegraph_graphnetwork_totaltokensstaked offset $__range_s + thegraph_graphnetwork_totaldelegatedtokens offset $__range_s))) / sum(thegraph_graphnetwork_totaltokensstaked offset $__range_s + thegraph_graphnetwork_totaldelegatedtokens offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Staked growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -366,7 +395,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "(thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)) ",
@@ -376,13 +405,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Inflation APY",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -423,23 +453,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)) - thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": true,
+          "expr": "(thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)) - thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) offset $__range_s",
           "interval": "",
           "legendFormat": "APY Change",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Inflation APY Change",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -478,23 +514,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalgrtminted - thegraph_graphnetwork_totalgrtminted offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totalgrtminted - thegraph_graphnetwork_totalgrtminted offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "GRT Minted per Period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -536,23 +578,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totalgrtminted - thegraph_graphnetwork_totalgrtminted offset ${__range_s}s) / thegraph_graphnetwork_totalgrtminted offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totalgrtminted - thegraph_graphnetwork_totalgrtminted offset $__range_s) / thegraph_graphnetwork_totalgrtminted offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "GRT Minted growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -591,7 +639,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalsupply",
@@ -600,13 +648,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Supply (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -647,11 +696,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
           "exemplar": true,
-          "expr": "thegraph_graphnetwork_totalqueryfees - thegraph_graphnetwork_totalqueryfees offset ${__range_s}s",
+          "expr": "thegraph_graphnetwork_totalqueryfees - thegraph_graphnetwork_totalqueryfees offset $__range_s",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -662,7 +715,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -704,11 +760,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
           "exemplar": true,
-          "expr": "(thegraph_graphnetwork_totalqueryfees - thegraph_graphnetwork_totalqueryfees offset ${__range_s}s) / thegraph_graphnetwork_totalqueryfees offset ${__range_s}s",
+          "expr": "(thegraph_graphnetwork_totalqueryfees - thegraph_graphnetwork_totalqueryfees offset $__range_s) / thegraph_graphnetwork_totalqueryfees offset $__range_s",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -719,7 +779,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -758,7 +821,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalgrtburned",
@@ -767,13 +830,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Burned",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -812,23 +876,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalsupply - thegraph_graphnetwork_totalsupply offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totalsupply - thegraph_graphnetwork_totalsupply offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Supply change per period (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -870,23 +940,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totalsupply - thegraph_graphnetwork_totalsupply offset ${__range_s}s) / thegraph_graphnetwork_totalsupply offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totalsupply - thegraph_graphnetwork_totalsupply offset $__range_s) / thegraph_graphnetwork_totalsupply offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total GRT Supply growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -925,23 +1001,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalgrtburned - thegraph_graphnetwork_totalgrtburned offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totalgrtburned - thegraph_graphnetwork_totalgrtburned offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "GRT Burned per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -983,24 +1065,26 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totalgrtburned - thegraph_graphnetwork_totalgrtburned offset ${__range_s}s) / thegraph_graphnetwork_totalgrtburned offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totalgrtburned - thegraph_graphnetwork_totalgrtburned offset $__range_s) / thegraph_graphnetwork_totalgrtburned offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "GRT Burned growth",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1013,7 +1097,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1052,7 +1139,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_indexercount",
@@ -1061,13 +1148,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexers",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1106,7 +1194,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaltokensstaked",
@@ -1115,13 +1203,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexers Staked (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1160,7 +1249,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingindexerrewards",
@@ -1169,13 +1258,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Indexer Rewards (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1214,23 +1304,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_indexercount - thegraph_graphnetwork_indexercount offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_indexercount - thegraph_graphnetwork_indexercount offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "Indexer Count",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "New Indexers",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1272,23 +1368,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_indexercount - thegraph_graphnetwork_indexercount offset ${__range_s}s) / thegraph_graphnetwork_indexercount offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_indexercount - thegraph_graphnetwork_indexercount offset $__range_s) / thegraph_graphnetwork_indexercount offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "Indexer Count",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexers growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1327,23 +1429,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totaltokensstaked - thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totaltokensstaked - thegraph_graphnetwork_totaltokensstaked offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexers Staked per Period (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1384,23 +1492,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totaltokensstaked - thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s) / thegraph_graphnetwork_totaltokensstaked offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totaltokensstaked - thegraph_graphnetwork_totaltokensstaked offset $__range_s) / thegraph_graphnetwork_totaltokensstaked offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexers Staked per Period (%)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1439,23 +1553,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexingindexerrewards - thegraph_graphnetwork_totalindexingindexerrewards offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totalindexingindexerrewards - thegraph_graphnetwork_totalindexingindexerrewards offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Indexer Rewards (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1496,24 +1616,26 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totalindexingindexerrewards - thegraph_graphnetwork_totalindexingindexerrewards offset ${__range_s}s) / thegraph_graphnetwork_totalindexingindexerrewards offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totalindexingindexerrewards - thegraph_graphnetwork_totalindexingindexerrewards offset $__range_s) / thegraph_graphnetwork_totalindexingindexerrewards offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexing Rewards growth",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1526,7 +1648,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1565,7 +1690,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_delegatorcount",
@@ -1574,13 +1699,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Delegators total",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "Total delegated tokens in the protocol",
       "fieldConfig": {
         "defaults": {
@@ -1620,7 +1746,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totaldelegatedtokens",
@@ -1629,13 +1755,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Delegated Tokens (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1674,7 +1801,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards",
@@ -1683,13 +1810,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Indexing Delegators Rewards (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1728,23 +1856,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_delegatorcount - thegraph_graphnetwork_delegatorcount offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_delegatorcount - thegraph_graphnetwork_delegatorcount offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "New Delegators",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1785,23 +1919,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_delegatorcount - thegraph_graphnetwork_delegatorcount offset ${__range_s}s) / thegraph_graphnetwork_delegatorcount offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_delegatorcount - thegraph_graphnetwork_delegatorcount offset $__range_s) / thegraph_graphnetwork_delegatorcount offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Delegators growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1841,23 +1981,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totaldelegatedtokens - thegraph_graphnetwork_totaldelegatedtokens offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totaldelegatedtokens - thegraph_graphnetwork_totaldelegatedtokens offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Delegated per Period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1899,23 +2045,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totaldelegatedtokens - thegraph_graphnetwork_totaldelegatedtokens offset ${__range_s}s) / thegraph_graphnetwork_totaldelegatedtokens",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totaldelegatedtokens - thegraph_graphnetwork_totaldelegatedtokens offset $__range_s) / thegraph_graphnetwork_totaldelegatedtokens",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Delegated growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1954,23 +2106,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards - thegraph_graphnetwork_totalindexingdelegatorrewards offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards - thegraph_graphnetwork_totalindexingdelegatorrewards offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexing Delegators Rewards per Period (GRT)",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2011,24 +2169,26 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "(thegraph_graphnetwork_totalindexingdelegatorrewards - thegraph_graphnetwork_totalindexingdelegatorrewards offset ${__range_s}s) / thegraph_graphnetwork_totalindexingdelegatorrewards offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totalindexingdelegatorrewards - thegraph_graphnetwork_totalindexingdelegatorrewards offset $__range_s) / thegraph_graphnetwork_totalindexingdelegatorrewards offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "GRT",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Indexing Delegators Rewards per Period (GRT)",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2041,7 +2201,10 @@
       "type": "row"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2080,7 +2243,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2090,13 +2253,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators total",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2138,7 +2302,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2153,7 +2317,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2195,7 +2362,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2210,7 +2377,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2252,7 +2422,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2267,7 +2437,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2306,24 +2479,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "thegraph_graphnetwork_curatorcount - thegraph_graphnetwork_curatorcount offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_curatorcount - thegraph_graphnetwork_curatorcount offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "New Curators",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2364,24 +2542,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(thegraph_graphnetwork_curatorcount - thegraph_graphnetwork_curatorcount offset ${__range_s}s) / thegraph_graphnetwork_curatorcount offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_curatorcount - thegraph_graphnetwork_curatorcount offset $__range_s) / thegraph_graphnetwork_curatorcount offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2420,24 +2603,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum(thegraph_curator_tokens_signalled) - sum(thegraph_curator_tokens_signalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "sum(thegraph_curator_tokens_signalled) - sum(thegraph_curator_tokens_signalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Signalled per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2478,24 +2666,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(sum(thegraph_curator_tokens_signalled) - sum(thegraph_curator_tokens_signalled offset ${__range_s}s)) / sum(thegraph_curator_tokens_signalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_curator_tokens_signalled) - sum(thegraph_curator_tokens_signalled offset $__range_s)) / sum(thegraph_curator_tokens_signalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2534,24 +2727,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum(thegraph_curator_tokens_unsignalled) - sum(thegraph_curator_tokens_unsignalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "sum(thegraph_curator_tokens_unsignalled) - sum(thegraph_curator_tokens_unsignalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Unsignalled per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2592,24 +2790,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(sum(thegraph_curator_tokens_unsignalled) - sum(thegraph_curator_tokens_unsignalled offset ${__range_s}s)) / sum(thegraph_curator_tokens_unsignalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_curator_tokens_unsignalled) - sum(thegraph_curator_tokens_unsignalled offset $__range_s)) / sum(thegraph_curator_tokens_unsignalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2648,24 +2851,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "thegraph_graphnetwork_totalcuratorqueryfees - thegraph_graphnetwork_totalcuratorqueryfees offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "thegraph_graphnetwork_totalcuratorqueryfees - thegraph_graphnetwork_totalcuratorqueryfees offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curator fees per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2706,24 +2914,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(thegraph_graphnetwork_totalcuratorqueryfees - thegraph_graphnetwork_totalcuratorqueryfees offset ${__range_s}s) / thegraph_graphnetwork_totalcuratorqueryfees offset ${__range_s}s",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(thegraph_graphnetwork_totalcuratorqueryfees - thegraph_graphnetwork_totalcuratorqueryfees offset $__range_s) / thegraph_graphnetwork_totalcuratorqueryfees offset $__range_s",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2765,7 +2978,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2780,7 +2993,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2822,7 +3038,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2837,7 +3053,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2879,7 +3098,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2894,7 +3113,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2936,7 +3158,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -2951,7 +3173,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2990,24 +3215,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum(thegraph_curator_tokens_namesignalled) - sum(thegraph_curator_tokens_namesignalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "sum(thegraph_curator_tokens_namesignalled) - sum(thegraph_curator_tokens_namesignalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Namesignalled per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3048,24 +3278,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(sum(thegraph_curator_tokens_namesignalled) - sum(thegraph_curator_tokens_namesignalled offset ${__range_s}s)) / sum(thegraph_curator_tokens_namesignalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_curator_tokens_namesignalled) - sum(thegraph_curator_tokens_namesignalled offset $__range_s)) / sum(thegraph_curator_tokens_namesignalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Namesignalled growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3104,24 +3339,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum(thegraph_curator_tokens_nameunsignalled) - sum(thegraph_curator_tokens_nameunsignalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "sum(thegraph_curator_tokens_nameunsignalled) - sum(thegraph_curator_tokens_nameunsignalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Nameunsignalled per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3162,24 +3402,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(sum(thegraph_curator_tokens_nameunsignalled) - sum(thegraph_curator_tokens_nameunsignalled offset ${__range_s}s)) / sum(thegraph_curator_tokens_nameunsignalled offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_curator_tokens_nameunsignalled) - sum(thegraph_curator_tokens_nameunsignalled offset $__range_s)) / sum(thegraph_curator_tokens_nameunsignalled offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators nameunsignalled growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3218,24 +3463,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum(thegraph_curator_namesignal_total) - sum(thegraph_curator_namesignal_total offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "sum(thegraph_curator_namesignal_total) - sum(thegraph_curator_namesignal_total offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Namesignals per period",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3276,24 +3526,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(sum(thegraph_curator_namesignal_total) - sum(thegraph_curator_namesignal_total offset ${__range_s}s)) / sum(thegraph_curator_namesignal_total offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_curator_namesignal_total) - sum(thegraph_curator_namesignal_total offset $__range_s)) / sum(thegraph_curator_namesignal_total offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Namesignals growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3332,24 +3587,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum(thegraph_curator_tokens_withdrawn) - sum(thegraph_curator_tokens_withdrawn offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "sum(thegraph_curator_tokens_withdrawn) - sum(thegraph_curator_tokens_withdrawn offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Curators withdrawn",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -3390,24 +3650,29 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "(sum(thegraph_curator_tokens_withdrawn) - sum(thegraph_curator_tokens_withdrawn offset ${__range_s}s)) / sum(thegraph_curator_tokens_withdrawn offset ${__range_s}s)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "exemplar": false,
+          "expr": "(sum(thegraph_curator_tokens_withdrawn) - sum(thegraph_curator_tokens_withdrawn offset $__range_s)) / sum(thegraph_curator_tokens_withdrawn offset $__range_s)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Withdrawn growth",
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3452,7 +3717,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -3467,7 +3732,10 @@
       "type": "stat"
     },
     {
-      "datasource": "victoriametrics",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3508,7 +3776,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.6",
+      "pluginVersion": "8.3.1",
       "targets": [
         {
           "exemplar": true,
@@ -3524,7 +3792,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 30,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3538,5 +3806,6 @@
   "timezone": "",
   "title": "Dynamics Report",
   "uid": "gWJAOQsMk",
-  "version": 21
+  "version": 24,
+  "weekStart": ""
 }
