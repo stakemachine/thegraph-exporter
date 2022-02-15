@@ -7,12 +7,11 @@ require (
 	github.com/VictoriaMetrics/metrics v1.18.1
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/btcsuite/btcd v0.21.0-beta // indirect
-	github.com/deckarep/golang-set v1.7.1 // indirect
-	github.com/ethereum/go-ethereum v1.10.15
+	github.com/deckarep/golang-set v1.8.0 // indirect
+	github.com/ethereum/go-ethereum v1.10.16
 	github.com/gballet/go-libpcsclite v0.0.0-20191108122812-4678299bea08 // indirect
 	github.com/go-ole/go-ole v1.2.5 // indirect
 	github.com/google/uuid v1.2.0 // indirect
-	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
 	github.com/mattn/go-runewidth v0.0.12 // indirect
 	github.com/peterbourgon/ff v1.7.1
 	github.com/prometheus/tsdb v0.10.0 // indirect
