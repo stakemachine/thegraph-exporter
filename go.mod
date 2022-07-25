@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/StackExchange/wmi v0.0.0-20210224194228-fe8f1750fd46 // indirect
-	github.com/VictoriaMetrics/metrics v1.18.1
+	github.com/VictoriaMetrics/metrics v1.20.1
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/btcsuite/btcd v0.21.0-beta // indirect
 	github.com/deckarep/golang-set v1.7.1 // indirect
