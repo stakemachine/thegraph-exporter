@@ -22,7 +22,7 @@ require (
 	github.com/shurcooL/graphql v0.0.0-20200928012149-18c5c3165e3a
 	github.com/stakemachine/graph-indexer-cli v0.0.14
 	github.com/status-im/keycard-go v0.0.0-20200402102358-957c09536969 // indirect
-	github.com/tidwall/gjson v1.14.0
+	github.com/tidwall/gjson v1.14.3
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
 	golang.org/x/time v0.0.0-20210611083556-38a9dc6acbc6 // indirect
 )
