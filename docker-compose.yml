@@ -15,7 +15,6 @@ volumes:
     grafana_data: {}
     vmagentdata: {}
     vmdata: {}
-    geth-mainnet-light: {}
 services:
 
 
@@ -26,7 +25,7 @@ services:
 
 
   grafana:
-    image: grafana/grafana:8.3.4
+    image: grafana/grafana:9.3.6
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
@@ -67,8 +66,6 @@ services:
     image: thegraph-exporter
     container_name: thegraph-exporter
     restart: unless-stopped
-    depends_on: 
-      - "geth-mainnet"
     expose:
       - 8080
     ulimits:
@@ -77,6 +74,7 @@ services:
         hard: 65536
     environment:
       - THEGRAPH_EXPORTER_NETWORK_SUBGRAPH=https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet
+      - THEGRAPH_EXPORTER_ETH_NODE=${ETH_NODE:-"http://geth-mainnet:8545/"}
     networks: 
       - exporter-net
     logging: *default-logging
@@ -88,7 +86,7 @@ services:
 
   vmagent:
     container_name: vmagent
-    image: victoriametrics/vmagent:v1.72.0
+    image: victoriametrics/vmagent:v1.86.2
     depends_on:
       - "victoriametrics"
       - "thegraph-exporter"
@@ -100,7 +98,7 @@ services:
     command:
       - '--promscrape.config=/etc/prometheus/prometheus.yml'
       - '--remoteWrite.url=http://victoriametrics:8428/api/v1/write'
-      - '-promscrape.maxScrapeSize=26777216'
+      - '-promscrape.maxScrapeSize=36777216'
     networks:
       - exporter-net
     restart: unless-stopped
@@ -113,7 +111,7 @@ services:
 
   victoriametrics:
     container_name: victoriametrics
-    image: victoriametrics/victoria-metrics:v1.72.0
+    image: victoriametrics/victoria-metrics:v1.86.2
     expose:
       - 8428
       - 8089
@@ -129,7 +127,7 @@ services:
       - '--influxListenAddr=:8089'
       - '--retentionPeriod=36'
       - '--selfScrapeInterval=15s'
-      - '-promscrape.maxScrapeSize=26777216'
+      - '-promscrape.maxScrapeSize=36777216'
     networks:
       - exporter-net
     restart: unless-stopped
@@ -142,7 +140,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx:1.21.6
+    image: nginx:1.23.3
     volumes:
       - ./nginx/templates:/etc/nginx/templates
     environment: 
@@ -151,27 +149,6 @@ services:
     ports:
       - 80:80
       #- 443:443
-    networks: 
-      - exporter-net
-    restart: unless-stopped
-    logging: *default-logging
-
-
-######################################################################################
-#####################                  GETH                    #######################
-######################################################################################
-  geth-mainnet:
-    container_name: geth-mainnet
-    image: ethereum/client-go:v1.10.15
-    volumes: 
-      - geth-mainnet-light:/root/.ethereum
-    command:
-      - '--syncmode=light'
-      - '--http'
-      - '--http.addr=0.0.0.0'
-      - '--http.vhosts=*'
-    expose:
-      - 8545
     networks: 
       - exporter-net
     restart: unless-stopped
