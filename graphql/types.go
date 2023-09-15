@@ -135,6 +135,7 @@ type Indexer struct {
 	TotalReturn                      string                                    // BigDecimal // Total return this indexer has earned
 	AnnualizedReturn                 string                                    // BigDecimal! // Annualized rate of return for the indexer
 	StakingEfficiency                string                                    // BigDecimal! // Staking efficiency of the indexer
+	StakedTokensTransferredToL2      string
 }
 
 // Allocation info

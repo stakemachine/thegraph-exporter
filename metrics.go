@@ -393,6 +393,14 @@ func (service Service) GetAndSetIndexerMetrics() error {
 
 		metricsList = append(metricsList, indexerIndexingRewardsMetric)
 
+		stakedTokensTransferredToL2, err := stringToGRT(indexer.StakedTokensTransferredToL2)
+		if err != nil {
+			log.Error().Err(err)
+		}
+		stakedTokensTransferredToL2Metric := fmt.Sprintf(`thegraph_indexer_stakedtokenstransferredtol2{indexer="%s"}`, indexer.ID)
+		service.Metrics.GetOrCreateCounter(stakedTokensTransferredToL2Metric).Set(stakedTokensTransferredToL2.Uint64())
+		metricsList = append(metricsList, stakedTokensTransferredToL2Metric)
+
 		delegatorIndexingRewards, err := stringToGRT(indexer.DelegatorIndexingRewards)
 		if err != nil {
 			log.Error().Err(err)
