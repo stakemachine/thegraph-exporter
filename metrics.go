@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"math/big"
 	"net/http"
 	"strconv"
@@ -242,6 +242,24 @@ func (service Service) GetAndSetGraphNetworkMetrics() error {
 		return err
 	}
 	service.Metrics.GetOrCreateCounter(`thegraph_graphnetwork_networkgrtissuance`).Set(networkGRTIssuance.Uint64())
+
+	totalDelegatedTokensTransferredToL2, err := stringToGRT(graphNetwork.TotalDelegatedTokensTransferredToL2)
+	if err != nil {
+		return err
+	}
+	service.Metrics.GetOrCreateCounter(`thegraph_graphnetwork_totaldelegatedtokenstransferredtol2`).Set(totalDelegatedTokensTransferredToL2.Uint64())
+
+	totalTokensStakedTransferredToL2, err := stringToGRT(graphNetwork.TotalTokensStakedTransferredToL2)
+	if err != nil {
+		return err
+	}
+	service.Metrics.GetOrCreateCounter(`thegraph_graphnetwork_totalstakedtokenstransferredtol2`).Set(totalTokensStakedTransferredToL2.Uint64())
+
+	totalSignalledTokensTransferredToL2, err := stringToGRT(graphNetwork.TotalSignalledTokensTransferredToL2)
+	if err != nil {
+		return err
+	}
+	service.Metrics.GetOrCreateCounter(`thegraph_graphnetwork_totalsignalledtokenstransferredtol2`).Set(totalSignalledTokensTransferredToL2.Uint64())
 
 	service.Metrics.GetOrCreateCounter(`thegraph_graphnetwork_currentepoch`).Set(uint64(graphNetwork.CurrentEpoch))
 	service.Metrics.GetOrCreateCounter(`thegraph_graphnetwork_indexercount`).Set(uint64(graphNetwork.IndexerCount))
@@ -858,7 +876,7 @@ func (service Service) GetAndSetGRTRate() {
 		}
 		defer resp.Body.Close()
 		if resp.Status == "200 OK" {
-			body, err := ioutil.ReadAll(resp.Body)
+			body, err := io.ReadAll(resp.Body)
 			if err != nil {
 				log.Error().Err(err) // log.Println("failed to read body", err)
 			}
@@ -985,5 +1003,48 @@ func (service Service) GetAndSetNameSignals() error {
 	}
 	service.clearOldMetrics(oldList, metricsList, "thegraph_namesignal")
 
+	return nil
+}
+
+func (service Service) GetAndSetIndexerDataPoints() error {
+	indexerDataPoints, err := service.QoSOracle.GetIndexerDataPoints()
+	if err != nil {
+		return err
+	}
+	oldList := service.Metrics.ListMetricNames()
+	var metricsList []string
+	for _, indexerDataPoint := range indexerDataPoints {
+		floatAvgQueryFee, err := strconv.ParseFloat(indexerDataPoint.AvgQueryFee, 64)
+		if err != nil {
+			return err
+		}
+		avgQueryFee := fmt.Sprintf(`thegraph_indexerdatapoint_avg_query_fee{indexer="%s",subgraphDeployment="%s"}`, indexerDataPoint.IndexerWallet, indexerDataPoint.SubgraphDeploymentIpshHash)
+		service.Metrics.GetOrCreateGauge(avgQueryFee, func() float64 {
+			return floatAvgQueryFee
+		})
+
+		metricsList = append(metricsList, avgQueryFee)
+
+		floatAvgIndexerLatencyMs, err := strconv.ParseFloat(indexerDataPoint.AvgIndexerLatencyMs, 64)
+		if err != nil {
+			return err
+		}
+		avgIndexerLatencyMs := fmt.Sprintf(`thegraph_indexerdatapoint_avg_indexer_latency_ms{indexer="%s",subgraphDeployment="%s"}`, indexerDataPoint.IndexerWallet, indexerDataPoint.SubgraphDeploymentIpshHash)
+		service.Metrics.GetOrCreateGauge(avgIndexerLatencyMs, func() float64 {
+			return floatAvgIndexerLatencyMs
+		})
+
+		metricsList = append(metricsList, avgIndexerLatencyMs)
+
+		intQueryCount, err := strconv.Atoi(indexerDataPoint.QueryCount)
+		if err != nil {
+			return err
+		}
+		queryCount := fmt.Sprintf(`thegraph_indexerdatapoint_query_count{indexer="%s",subgraphDeployment="%s"}`, indexerDataPoint.IndexerWallet, indexerDataPoint.SubgraphDeploymentIpshHash)
+		service.Metrics.GetOrCreateCounter(queryCount).Set(uint64(intQueryCount))
+		metricsList = append(metricsList, queryCount)
+
+	}
+	service.clearOldMetrics(oldList, metricsList, "thegraph_indexerdatapoint")
 	return nil
 }

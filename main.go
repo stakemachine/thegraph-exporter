@@ -11,14 +11,14 @@ import (
 	"time"
 
 	"github.com/VictoriaMetrics/metrics"
-	"github.com/akme/thegraph-exporter/ethereum"
-	thegraph "github.com/akme/thegraph-exporter/graphql"
 	"github.com/asaskevich/govalidator"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/peterbourgon/ff"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/shurcooL/graphql"
+	"github.com/stakemachine/thegraph-exporter/ethereum"
+	thegraph "github.com/stakemachine/thegraph-exporter/graphql"
 )
 
 var (
@@ -32,6 +32,7 @@ var (
 type Service struct {
 	GqlMainnet   *thegraph.GraphService
 	GqlTokenLock *thegraph.GraphService
+	QoSOracle    *thegraph.GraphService
 	Eth          *ethereum.EthService
 	Metrics      *metrics.Set
 }
@@ -99,6 +100,7 @@ func main() {
 	var (
 		ethNode                   = fs.String("eth-node", "http://geth-mainnet:8545", "Ethereum RPC API URL")
 		networkSubgraph           = fs.String("network-subgraph", "https://gateway.thegraph.com/network", "The Graph Network Subgraph URL")
+		gatewayQoSOracleSubgraph  = fs.String("qos-oracle", "https://api.thegraph.com/subgraphs/name/graphprotocol/gateway-mips-qos-oracle", "Gateway QoS Oracle Subgraph URL")
 		tokenDistributionSubgraph = fs.String("distribution-subgraph", "https://api.thegraph.com/subgraphs/name/graphprotocol/token-distribution", "The Graph Token Distribution Subgraph URL")
 		listenPort                = fs.String("listen", ":8080", "Listen HTTP Port ")
 		logLevelFlag              = fs.Int("log-level", 0, "Log level")
@@ -136,17 +138,26 @@ func main() {
 
 	gqlMainnetClient := graphql.NewClient(*networkSubgraph, &http.Client{Timeout: time.Duration(*httpTimeout) * time.Second})
 	gqlTokenLockClient := graphql.NewClient(*tokenDistributionSubgraph, &http.Client{Timeout: time.Duration(*httpTimeout) * time.Second})
+	gatewayQoSOracleClient := graphql.NewClient(*gatewayQoSOracleSubgraph, &http.Client{Timeout: time.Duration(*httpTimeout) * time.Second})
 	metricSet := metrics.NewSet()
 
 	clients := Service{
 		Eth:          &ethereum.EthService{Client: ethClient},
 		GqlMainnet:   &thegraph.GraphService{Client: gqlMainnetClient},
 		GqlTokenLock: &thegraph.GraphService{Client: gqlTokenLockClient},
+		QoSOracle:    &thegraph.GraphService{Client: gatewayQoSOracleClient},
 		Metrics:      metricSet,
 	}
 
 	go func() {
 		for {
+
+			// err := clients.GetAndSetIndexerDataPoints()
+			// if err != nil {
+			// 	log.Error().Err(err).Msg("IndexerDataPoints")
+			// }
+			// time.Sleep(30 * time.Second)
+			// continue
 			err := clients.GetAndSetSignals()
 			if err != nil {
 				log.Error().Err(err).Msg("GetAndSetSignals")

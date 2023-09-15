@@ -39,55 +39,57 @@ type GraphNetwork struct {
 	ThawingPeriod                 int      // Time in blocks needed to wait to unstake
 	DelegationParametersCooldown  int      // Minimum time an Indexer must use for resetting their Delegation parameters
 	// WAS REMOVED 28.01.2021 IndexingRewardsPerEpoch        int      // The number of times indexing rewards are handed out each epoch
-	MinimumIndexerStake            string   // big.Int  // Minimum GRT an indexer must stake
-	Slashers                       []string // [Bytes!] // Contracts that have been approved to be a slasher
-	DelegationUnbondingPeriod      int      // Time in epochs a delegator needs to wait to withdraw delegated stake
-	RebateRatio                    string   // big.Int  // BigDecimal! // Alpha in the cobbs douglas formula
-	DelegationTaxPercentage        int      // Tax that delegators pay to deposit
-	AssetHolders                   []string // [Bytes!] // Asset holder for the protocol
-	TotalTokensStaked              string   // big.Int  // The total amount of GRT staked in the staking contract
-	TotalTokensClaimable           string   // big.Int  // Total tokens that are settled and waiting to be claimed
-	TotalUnstakedTokensLocked      string   // big.Int  // Total tokens that are currently locked or withdrawable in the network from unstaking
-	TotalTokensAllocated           string   // big.Int  // Total GRT currently in allocation
-	TotalDelegatedTokens           string   // big.Int  // Total delegated tokens in the protocol
-	TotalQueryFees                 string   // big.Int  // Total query fees generated in the network
-	TotalIndexerQueryFeesCollected string   // big.Int  // Total query fees collected by indexers
-	TotalIndexerQueryFeeRebates    string   // big.Int  // Total query fees rebates claimed by indexers
-	TotalDelegatorQueryFeeRebates  string   // big.Int  // Total query fees rebates claimed by delegators
-	TotalCuratorQueryFees          string   // big.Int  // Total query fees payed to curators
-	TotalTaxedQueryFees            string   // big.Int  // Total query fees taxed by the protocol
-	TotalUnclaimedQueryFeeRebates  string   // big.Int  // Total query fees taxed by the protocol
-	TotalIndexingRewards           string   // big.Int  // Total indexing rewards earned. Including delegators and indexers parts
-	TotalIndexingDelegatorRewards  string   // big.Int  // Total indexing rewards earned by Delegators
-	TotalIndexingIndexerRewards    string   // big.Int  // Total indexing rewards earned by Indexers
-	NetworkGRTIssuance             string   `graphql:"networkGRTIssuance"` // big.Int  // The issuance rate that GRT is minted at for rewards to staked Indexers
-	SubgraphAvailabilityOracle     string   // Bytes! // Address of the availability oracle
-	DefaultReserveRatio            int      // Default reserve ratio for all subgraphs
-	MinimumCurationDeposit         string   // big.Int // Minimum amount of tokens needed to start curating
-	CurationTaxPercentage          int      // The fee charged when a curator withdraws signal
-	TotalTokensSignalled           string   // big.Int // The total amount of GRT signalled in the Curation contract
-	TotalSupply                    string   // big.Int // Graph Token supply
-	GRTinUSD                       string   `graphql:"GRTinUSD"`       // big.Int // BigDecimal! // Price of one GRT in USD
-	GRTinETH                       string   `graphql:"GRTinETH"`       // big.Int // BigDecimal // Price of one GRT in ETH
-	TotalGRTMinted                 string   `graphql:"totalGRTMinted"` // big.Int // Total amount of GRT minted
-	TotalGRTBurned                 string   `graphql:"totalGRTBurned"` // big.Int // Total amount of GRT burned
-	EpochLength                    int      // Epoch Length in blocks
-	LastRunEpoch                   int      // Epoch that was last run
-	LastLengthUpdateEpoch          int      // Epoch when epoch length was last updated
-	LastLengthUpdateBlock          int      // Block when epoch length was last updated
-	CurrentEpoch                   int      // Current epoch the protocol is in
-	IndexerCount                   int      // Total indexers
-	StakedIndexersCount            int      // Number of indexers that currently have some stake in the protocol
-	DelegatorCount                 int      // Total delegators
-	CuratorCount                   int      // Total curators
-	SubgraphCount                  int      // Total subgraphs
-	SubgraphDeploymentCount        int      // Total subgraphs
-	EpochCount                     int      // Total epochs
-	Arbitrator                     string   // Bytes! // Dispute arbitrator
-	SlashingPercentage             int      // Penalty to Indexer on successful disputes
-	MinimumDisputeDeposit          string   // big.Int // Minimum deposit to create a dispute
-	FishermanRewardPercentage      int      // Reward to Fisherman on successful disputes
-
+	MinimumIndexerStake                 string   // big.Int  // Minimum GRT an indexer must stake
+	Slashers                            []string // [Bytes!] // Contracts that have been approved to be a slasher
+	DelegationUnbondingPeriod           int      // Time in epochs a delegator needs to wait to withdraw delegated stake
+	RebateRatio                         string   // big.Int  // BigDecimal! // Alpha in the cobbs douglas formula
+	DelegationTaxPercentage             int      // Tax that delegators pay to deposit
+	AssetHolders                        []string // [Bytes!] // Asset holder for the protocol
+	TotalTokensStaked                   string   // big.Int  // The total amount of GRT staked in the staking contract
+	TotalTokensClaimable                string   // big.Int  // Total tokens that are settled and waiting to be claimed
+	TotalUnstakedTokensLocked           string   // big.Int  // Total tokens that are currently locked or withdrawable in the network from unstaking
+	TotalTokensAllocated                string   // big.Int  // Total GRT currently in allocation
+	TotalDelegatedTokens                string   // big.Int  // Total delegated tokens in the protocol
+	TotalQueryFees                      string   // big.Int  // Total query fees generated in the network
+	TotalIndexerQueryFeesCollected      string   // big.Int  // Total query fees collected by indexers
+	TotalIndexerQueryFeeRebates         string   // big.Int  // Total query fees rebates claimed by indexers
+	TotalDelegatorQueryFeeRebates       string   // big.Int  // Total query fees rebates claimed by delegators
+	TotalCuratorQueryFees               string   // big.Int  // Total query fees payed to curators
+	TotalTaxedQueryFees                 string   // big.Int  // Total query fees taxed by the protocol
+	TotalUnclaimedQueryFeeRebates       string   // big.Int  // Total query fees taxed by the protocol
+	TotalIndexingRewards                string   // big.Int  // Total indexing rewards earned. Including delegators and indexers parts
+	TotalIndexingDelegatorRewards       string   // big.Int  // Total indexing rewards earned by Delegators
+	TotalIndexingIndexerRewards         string   // big.Int  // Total indexing rewards earned by Indexers
+	NetworkGRTIssuance                  string   `graphql:"networkGRTIssuance"` // big.Int  // The issuance rate that GRT is minted at for rewards to staked Indexers
+	SubgraphAvailabilityOracle          string   // Bytes! // Address of the availability oracle
+	DefaultReserveRatio                 int      // Default reserve ratio for all subgraphs
+	MinimumCurationDeposit              string   // big.Int // Minimum amount of tokens needed to start curating
+	CurationTaxPercentage               int      // The fee charged when a curator withdraws signal
+	TotalTokensSignalled                string   // big.Int // The total amount of GRT signalled in the Curation contract
+	TotalSupply                         string   // big.Int // Graph Token supply
+	GRTinUSD                            string   `graphql:"GRTinUSD"`       // big.Int // BigDecimal! // Price of one GRT in USD
+	GRTinETH                            string   `graphql:"GRTinETH"`       // big.Int // BigDecimal // Price of one GRT in ETH
+	TotalGRTMinted                      string   `graphql:"totalGRTMinted"` // big.Int // Total amount of GRT minted
+	TotalGRTBurned                      string   `graphql:"totalGRTBurned"` // big.Int // Total amount of GRT burned
+	EpochLength                         int      // Epoch Length in blocks
+	LastRunEpoch                        int      // Epoch that was last run
+	LastLengthUpdateEpoch               int      // Epoch when epoch length was last updated
+	LastLengthUpdateBlock               int      // Block when epoch length was last updated
+	CurrentEpoch                        int      // Current epoch the protocol is in
+	IndexerCount                        int      // Total indexers
+	StakedIndexersCount                 int      // Number of indexers that currently have some stake in the protocol
+	DelegatorCount                      int      // Total delegators
+	CuratorCount                        int      // Total curators
+	SubgraphCount                       int      // Total subgraphs
+	SubgraphDeploymentCount             int      // Total subgraphs
+	EpochCount                          int      // Total epochs
+	Arbitrator                          string   // Bytes! // Dispute arbitrator
+	SlashingPercentage                  int      // Penalty to Indexer on successful disputes
+	MinimumDisputeDeposit               string   // big.Int // Minimum deposit to create a dispute
+	FishermanRewardPercentage           int      // Reward to Fisherman on successful disputes
+	TotalTokensStakedTransferredToL2    string
+	TotalDelegatedTokensTransferredToL2 string
+	TotalSignalledTokensTransferredToL2 string
 }
 
 // Indexer info
@@ -133,7 +135,6 @@ type Indexer struct {
 	TotalReturn                      string                                    // BigDecimal // Total return this indexer has earned
 	AnnualizedReturn                 string                                    // BigDecimal! // Annualized rate of return for the indexer
 	StakingEfficiency                string                                    // BigDecimal! // Staking efficiency of the indexer
-
 }
 
 // Allocation info
@@ -165,7 +166,6 @@ type Allocation struct {
 	Poi                      string              // Bytes // POI submitted with a closed allocation
 	TotalReturn              string              // BigDecimal! // Return for this allocation
 	AnnualizedReturn         string              // BigDecimal! // Yearly annualzied return
-
 }
 
 // Pool info
@@ -176,7 +176,6 @@ type Pool struct {
 	ClaimedFees       big.Int      // Total query fees claimed in this epoch. Can be smaller than totalFees because of cobbs douglas function
 	CuratorRewards    big.Int      // Total rewards deposited to all curator bonding curves during the epoch
 	ClosedAllocations []Allocation // Allocations that were closed during this epoch
-
 }
 
 // Subgraph info
@@ -309,7 +308,6 @@ type GraphAccountName struct {
 	NameSystem string // NameSystem! // Name system for this name
 	Name       string // Name from the system
 	// GraphAccount GraphAccount // The graph account that owned the name when it was linked in the graph network
-
 }
 
 // GraphAccount info
@@ -428,4 +426,23 @@ type TokenLockWallet struct {
 	TokensRevoked             string
 	BlockNumberCreated        string
 	TxHash                    string
+}
+
+type IndexerDataPoint struct {
+	ID                            string
+	AvgIndexerBlocksBehind        string `graphql:"avg_indexer_blocks_behind"`
+	AvgIndexerLatencyMs           string `graphql:"avg_indexer_latency_ms"`
+	AvgQueryFee                   string `graphql:"avg_query_fee"`
+	StartEpoch                    string `graphql:"start_epoch"`
+	EndEpoch                      string `graphql:"end_epoch"`
+	MaxIndexerBlocksBehind        string `graphql:"max_indexer_blocks_behind"`
+	MaxIndexerLatencyMs           string `graphql:"max_indexer_latency_ms"`
+	MaxQueryFee                   string `graphql:"max_query_fee"`
+	NumUbdexer200Responses        string `graphql:"num_indexer_200_responses"`
+	ProportionIndexer200Responses string `graphql:"proportion_indexer_200_responses"`
+	QueryCount                    string `graphql:"query_count"`
+	StdevIndexerLatencyMs         string `graphql:"stdev_indexer_latency_ms"`
+	SubgraphDeploymentIpshHash    string `graphql:"subgraph_deployment_ipfs_hash"`
+	TotalQueryFees                string `graphql:"total_query_fees"`
+	IndexerWallet                 string `graphql:"indexer_wallet"`
 }

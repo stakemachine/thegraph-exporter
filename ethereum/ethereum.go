@@ -3,11 +3,11 @@ package ethereum
 import (
 	"errors"
 
-	"github.com/akme/thegraph-exporter/ethereum/contracts/rewards"
-	"github.com/akme/thegraph-exporter/ethereum/erc20"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/stakemachine/thegraph-exporter/ethereum/contracts/rewards"
+	"github.com/stakemachine/thegraph-exporter/ethereum/erc20"
 )
 
 // GetRewards get rewards

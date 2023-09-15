@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/rs/zerolog/log"
 
 	"github.com/shurcooL/graphql"
@@ -342,4 +343,38 @@ func (gs *GraphService) GetNameSignals() ([]NameSignal, error) {
 		return []NameSignal{}, err
 	}
 	return nameSignals, nil
+}
+
+func (gs *GraphService) GetIndexerDataPoints() ([]IndexerDataPoint, error) {
+	variables := map[string]interface{}{
+		"limit":      graphql.Int(1000),
+		"lastID":     graphql.String(""),
+		"epochShift": graphql.Int(time.Now().Unix() - 1800),
+	}
+	var q struct {
+		IndexerDataPoints []IndexerDataPoint `graphql:"indexerDataPoints(first:$limit, orderBy: end_epoch, orderDirection: asc, where:{end_epoch_gte: $epochShift, id_gt: $lastID})"`
+	}
+	spew.Dump(variables)
+	var indexerDataPoints []IndexerDataPoint
+	var err error
+	skip := 0
+	for {
+		err = gs.Client.Query(context.Background(), &q, variables)
+		if err != nil {
+			return []IndexerDataPoint{}, err
+		}
+		skip += 1000
+		indexerDataPoints = append(indexerDataPoints, q.IndexerDataPoints...)
+		// TODO check if empty response
+		variables["lastID"] = graphql.String(indexerDataPoints[len(indexerDataPoints)-1].ID)
+		log.Debug().Msgf("IndexerDataPoints pagination: %d", skip)
+		if len(q.IndexerDataPoints) == 0 || len(q.IndexerDataPoints) < 1000 {
+			break
+		}
+		time.Sleep(2 * time.Second)
+	}
+	if err != nil {
+		return []IndexerDataPoint{}, err
+	}
+	return indexerDataPoints, nil
 }

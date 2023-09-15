@@ -1,10 +1,9 @@
-version: '2.1'
+version: "2.1"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   options:
-    max-file: '1'
-    compress: 'false'
+    max-file: "1"
+    compress: "false"
   driver: local
 
 networks:
@@ -12,20 +11,16 @@ networks:
     driver: bridge
 
 volumes:
-    grafana_data: {}
-    vmagentdata: {}
-    vmdata: {}
+  grafana_data: {}
+  vmagentdata: {}
+  vmdata: {}
 services:
-
-
-######################################################################################
-#####################           GRAFANA CONTAINER              #######################
-######################################################################################
-
-
+  ######################################################################################
+  #####################           GRAFANA CONTAINER              #######################
+  ######################################################################################
 
   grafana:
-    image: grafana/grafana:9.3.6
+    image: grafana/grafana:9.4.7
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
@@ -56,11 +51,9 @@ services:
       - exporter-net
     logging: *default-logging
 
-
-
-######################################################################################
-#####################           TheGraph Exporter              #######################
-######################################################################################
+  ######################################################################################
+  #####################           TheGraph Exporter              #######################
+  ######################################################################################
 
   thegraph-exporter:
     image: thegraph-exporter
@@ -68,6 +61,8 @@ services:
     restart: unless-stopped
     expose:
       - 8080
+    ports:
+      - 8080:8080
     ulimits:
       nofile:
         soft: 65536
@@ -75,18 +70,17 @@ services:
     environment:
       - THEGRAPH_EXPORTER_NETWORK_SUBGRAPH=https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet
       - THEGRAPH_EXPORTER_ETH_NODE=${ETH_NODE:-"http://geth-mainnet:8545/"}
-    networks: 
+    networks:
       - exporter-net
     logging: *default-logging
 
-
-######################################################################################
-#####################                vmagent                   #######################
-######################################################################################
+  ######################################################################################
+  #####################                vmagent                   #######################
+  ######################################################################################
 
   vmagent:
     container_name: vmagent
-    image: victoriametrics/vmagent:v1.86.2
+    image: victoriametrics/vmagent:v1.87.3
     depends_on:
       - "victoriametrics"
       - "thegraph-exporter"
@@ -96,22 +90,21 @@ services:
       - vmagentdata:/vmagentdata
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
-      - '--promscrape.config=/etc/prometheus/prometheus.yml'
-      - '--remoteWrite.url=http://victoriametrics:8428/api/v1/write'
-      - '-promscrape.maxScrapeSize=36777216'
+      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+      - "--remoteWrite.url=http://victoriametrics:8428/api/v1/write"
+      - "-promscrape.maxScrapeSize=36777216"
     networks:
       - exporter-net
     restart: unless-stopped
     logging: *default-logging
 
-
-######################################################################################
-#####################            VictoriaMetrics               #######################
-######################################################################################
+  ######################################################################################
+  #####################            VictoriaMetrics               #######################
+  ######################################################################################
 
   victoriametrics:
     container_name: victoriametrics
-    image: victoriametrics/victoria-metrics:v1.86.2
+    image: victoriametrics/victoria-metrics:v1.87.3
     expose:
       - 8428
       - 8089
@@ -120,36 +113,35 @@ services:
     volumes:
       - vmdata:/storage
     command:
-      - '--storageDataPath=/storage'
-      - '--graphiteListenAddr=:2003'
-      - '--opentsdbListenAddr=:4242'
-      - '--httpListenAddr=:8428'
-      - '--influxListenAddr=:8089'
-      - '--retentionPeriod=36'
-      - '--selfScrapeInterval=15s'
-      - '-promscrape.maxScrapeSize=36777216'
+      - "--storageDataPath=/storage"
+      - "--graphiteListenAddr=:2003"
+      - "--opentsdbListenAddr=:4242"
+      - "--httpListenAddr=:8428"
+      - "--influxListenAddr=:8089"
+      - "--retentionPeriod=36"
+      - "--selfScrapeInterval=15s"
+      - "-promscrape.maxScrapeSize=36777216"
     networks:
       - exporter-net
     restart: unless-stopped
     logging: *default-logging
 
-
-######################################################################################
-#####################                  NGINX                   #######################
-######################################################################################
+  ######################################################################################
+  #####################                  NGINX                   #######################
+  ######################################################################################
 
   nginx:
     container_name: nginx
     image: nginx:1.23.3
     volumes:
       - ./nginx/templates:/etc/nginx/templates
-    environment: 
+    environment:
       - NGINX_HOST=${NGINX_HOST:-example.com}
       - NGINX_PORT=${NGINX_PORT:-80}
     ports:
       - 80:80
       #- 443:443
-    networks: 
+    networks:
       - exporter-net
     restart: unless-stopped
     logging: *default-logging
