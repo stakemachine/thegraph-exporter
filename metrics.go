@@ -549,6 +549,13 @@ func (service Service) GetAndSetDelegatedStakesMetrics() error {
 		lockedTokensMetric := fmt.Sprintf(`thegraph_delegatedstake_tokens_locked{indexer="%s",delegator="%s"}`, ds.Indexer.ID, ds.Delegator.ID)
 		service.Metrics.GetOrCreateCounter(lockedTokensMetric).Set(lockedTokens.Uint64())
 
+		stakedTokensTransferredToL2, err := stringToGRT(ds.StakedTokensTransferredToL2)
+		if err != nil {
+			fmt.Println(err)
+		}
+		stakedTokensTransferredToL2Metric := fmt.Sprintf(`thegraph_delegatedstake_stakedtokenstransferredtol2{indexer="%s",delegator="%s"}`, ds.Indexer.ID, ds.Delegator.ID)
+		service.Metrics.GetOrCreateCounter(stakedTokensTransferredToL2Metric).Set(stakedTokensTransferredToL2.Uint64())
+
 		metricsList = append(metricsList, lockedTokensMetric)
 
 		realizedRewards, err := strFloatToBigInt(ds.RealizedRewards)

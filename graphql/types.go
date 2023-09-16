@@ -292,15 +292,16 @@ type DelegatedStake struct {
 		DelegationExchangeRate string
 		DelegatorShares        string
 	} // Indexer // Index the stake is delegated to
-	Delegator            struct{ ID string } // Delegator // Delegator
-	StakedTokens         string              // Amount delegated all time (static)
-	UnstakedTokens       string              // Amount un-delegated all time (static)
-	LockedTokens         string              // Amount currently locked
-	LockedUntil          int                 // Epoch the locked tokens are unlocked
-	ShareAmount          string              // Shares owned in the delegator pool. Used to calculate total amount delegated
-	PersonalExchangeRate string              // BigDecimal // The rate this delegator paid for their shares (calculated using average cost basis). Used for rewards calculations
-	RealizedRewards      string              // BigDecimal! // Realized rewards from selling delegated stake that accumulated rewards
-	CreatedAt            int                 // Time this delegator first delegated to an indexer
+	Delegator                   struct{ ID string } // Delegator // Delegator
+	StakedTokens                string              // Amount delegated all time (static)
+	UnstakedTokens              string              // Amount un-delegated all time (static)
+	LockedTokens                string              // Amount currently locked
+	LockedUntil                 int                 // Epoch the locked tokens are unlocked
+	ShareAmount                 string              // Shares owned in the delegator pool. Used to calculate total amount delegated
+	PersonalExchangeRate        string              // BigDecimal // The rate this delegator paid for their shares (calculated using average cost basis). Used for rewards calculations
+	RealizedRewards             string              // BigDecimal! // Realized rewards from selling delegated stake that accumulated rewards
+	CreatedAt                   int                 // Time this delegator first delegated to an indexer
+	StakedTokensTransferredToL2 string
 }
 
 // GraphAccountName info
