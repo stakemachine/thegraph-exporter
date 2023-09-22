@@ -98,13 +98,15 @@ func handle(h http.HandlerFunc) http.HandlerFunc {
 func main() {
 	fs := flag.NewFlagSet("thegraph-exporter", flag.ExitOnError)
 	var (
-		ethNode                   = fs.String("eth-node", "http://geth-mainnet:8545", "Ethereum RPC API URL")
-		networkSubgraph           = fs.String("network-subgraph", "https://gateway.thegraph.com/network", "The Graph Network Subgraph URL")
-		gatewayQoSOracleSubgraph  = fs.String("qos-oracle", "https://api.thegraph.com/subgraphs/name/graphprotocol/gateway-mips-qos-oracle", "Gateway QoS Oracle Subgraph URL")
-		tokenDistributionSubgraph = fs.String("distribution-subgraph", "https://api.thegraph.com/subgraphs/name/graphprotocol/token-distribution", "The Graph Token Distribution Subgraph URL")
-		listenPort                = fs.String("listen", ":8080", "Listen HTTP Port ")
-		logLevelFlag              = fs.Int("log-level", 0, "Log level")
-		httpTimeout               = fs.Int("http-timeout", 15, "HTTP request timeout")
+		ethNode                       = fs.String("eth-node", "http://geth-mainnet:8545", "Ethereum RPC API URL")
+		networkSubgraph               = fs.String("network-subgraph", "https://gateway.thegraph.com/network", "The Graph Network Subgraph URL")
+		gatewayQoSOracleSubgraph      = fs.String("qos-oracle", "https://api.thegraph.com/subgraphs/name/graphprotocol/gateway-mips-qos-oracle", "Gateway QoS Oracle Subgraph URL")
+		tokenDistributionSubgraph     = fs.String("distribution-subgraph", "https://api.thegraph.com/subgraphs/name/graphprotocol/token-distribution", "The Graph Token Distribution Subgraph URL")
+		rewardsManagerContractAddress = fs.String("rewards-manager", "0x9Ac758AB77733b4150A901ebd659cbF8cB93ED66", "Rewards Manager Contract Address")
+		tokenAddress                  = fs.String("token-address", "0xc944e90c64b2c07662a292be6244bdf05cda44a7", "GRT Token Contract Address")
+		listenPort                    = fs.String("listen", ":8080", "Listen HTTP Port ")
+		logLevelFlag                  = fs.Int("log-level", 0, "Log level")
+		httpTimeout                   = fs.Int("http-timeout", 15, "HTTP request timeout")
 	)
 	err := ff.Parse(fs, os.Args[1:],
 		ff.WithEnvVarPrefix("THEGRAPH_EXPORTER"),
@@ -118,6 +120,11 @@ func main() {
 	zerolog.SetGlobalLevel(logLevel)
 
 	log.Info().Msgf("Build info: %s/%s/%s built with %s", GitBranch, GitCommit, GitTag, runtime.Version())
+	log.Info().Msgf("Token address: %s", *tokenAddress)
+	log.Info().Msgf("Network Subgraph: %s", *networkSubgraph)
+	log.Info().Msgf("Rewards Manager: %s", *rewardsManagerContractAddress)
+	log.Info().Msgf("Token Distribution Subgraph: %s", *tokenDistributionSubgraph)
+	log.Info().Msgf("Ethereum node: %s", *ethNode)
 
 	if ok := govalidator.IsURL(*ethNode); !ok {
 		log.Fatal().Msgf("Incorrect Ethereum Node URL: %s", *ethNode)
@@ -168,7 +175,7 @@ func main() {
 				log.Error().Err(err).Msg("GetAndSetNameSignals")
 			}
 
-			err = clients.GetAndSetVestingBalanceMetrics()
+			err = clients.GetAndSetVestingBalanceMetrics(*tokenAddress)
 			if err != nil {
 				log.Error().Err(err).Msg("GetAndSetVestingBalanceMetrics")
 			}
@@ -198,7 +205,7 @@ func main() {
 			if err != nil {
 				log.Error().Err(err).Msg("GetAndSetIndexerMetrics")
 			}
-			err = clients.GetAndSetActiveAllocationsRewardsMetrics()
+			err = clients.GetAndSetActiveAllocationsRewardsMetrics(*rewardsManagerContractAddress)
 			if err != nil {
 				log.Error().Err(err).Msg("GetAndSetActiveAllocationsRewardsMetrics")
 			}

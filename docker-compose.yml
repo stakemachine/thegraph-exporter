@@ -20,7 +20,7 @@ services:
   ######################################################################################
 
   grafana:
-    image: grafana/grafana:9.4.7
+    image: grafana/grafana:10.1.2
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
@@ -45,8 +45,8 @@ services:
     restart: unless-stopped
     expose:
       - 3000
-    #ports:
-    #  - 3000:3000
+    # ports:
+    #   - 3000:3000
     networks:
       - exporter-net
     logging: *default-logging
@@ -61,8 +61,6 @@ services:
     restart: unless-stopped
     expose:
       - 8080
-    ports:
-      - 8080:8080
     ulimits:
       nofile:
         soft: 65536
@@ -75,12 +73,35 @@ services:
     logging: *default-logging
 
   ######################################################################################
+  #####################           TheGraph Arbitrum Exporter              ##############
+  ######################################################################################
+
+  thegraph-exporter-arbitrum:
+    image: thegraph-exporter
+    container_name: thegraph-exporter-arbitrum
+    restart: unless-stopped
+    expose:
+      - 8080
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      - THEGRAPH_EXPORTER_NETWORK_SUBGRAPH=https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum
+      - THEGRAPH_EXPORTER_ETH_NODE=${ARBITRUM_NODE:-"https://arb1.arbitrum.io/rpc"}
+      - THEGRAPH_EXPORTER_REWARDS_MANAGER=${ARBITRUM_REWARDS_MANAGER:-0x971B9d3d0Ae3ECa029CAB5eA1fB0F72c85e6a525}
+      - THEGRAPH_EXPORTER_TOKEN_ADDRESS=${ARBITRUM_TOKEN_ADDRESS:-"0x9623063377AD1B27544C965cCd7342f7EA7e88C7"}
+    networks:
+      - exporter-net
+    logging: *default-logging
+
+  ######################################################################################
   #####################                vmagent                   #######################
   ######################################################################################
 
   vmagent:
     container_name: vmagent
-    image: victoriametrics/vmagent:v1.87.3
+    image: victoriametrics/vmagent:v1.93.5
     depends_on:
       - "victoriametrics"
       - "thegraph-exporter"
@@ -104,7 +125,7 @@ services:
 
   victoriametrics:
     container_name: victoriametrics
-    image: victoriametrics/victoria-metrics:v1.87.3
+    image: victoriametrics/victoria-metrics:v1.93.5
     expose:
       - 8428
       - 8089

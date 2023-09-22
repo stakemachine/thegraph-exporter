@@ -38,7 +38,7 @@ func (service Service) clearOldMetrics(oldList, newList []string, metricPrefix s
 }
 
 // GetAndSetActiveAllocationsRewardsMetrics get rewards and set metrics
-func (service Service) GetAndSetActiveAllocationsRewardsMetrics() error {
+func (service Service) GetAndSetActiveAllocationsRewardsMetrics(rewardsManagerContractAddress string) error {
 	allos, err := service.GqlMainnet.GetAllocations()
 	if err != nil {
 		return err
@@ -50,7 +50,7 @@ func (service Service) GetAndSetActiveAllocationsRewardsMetrics() error {
 	var metricsList []string
 
 	for _, allo := range allos {
-		rewards, err := service.Eth.GetRewards(allo.ID)
+		rewards, err := service.Eth.GetRewards(allo.ID, rewardsManagerContractAddress)
 		if err != nil {
 			log.Error().Err(err).Msg("GetRewards error")
 			continue // fmt.Println(err)
@@ -78,8 +78,8 @@ func (service Service) GetAndSetActiveAllocationsRewardsMetrics() error {
 }
 
 // GetAndSetVestingBalanceMetrics get vesting balances and convert to metrics
-func (service Service) GetAndSetVestingBalanceMetrics() error {
-	tokenLockWallets, err := service.GqlTokenLock.GetAllTokenLockWallets()
+func (service Service) GetAndSetVestingBalanceMetrics(tokenAddress string) error {
+	tokenLockWallets, err := service.GqlTokenLock.GetAllTokenLockWallets(tokenAddress)
 	if err != nil {
 		return err
 	}
@@ -92,7 +92,7 @@ func (service Service) GetAndSetVestingBalanceMetrics() error {
 	}
 
 	for _, address := range addresses {
-		balance, err := service.Eth.GetTokenBalance("0xc944e90c64b2c07662a292be6244bdf05cda44a7", address)
+		balance, err := service.Eth.GetTokenBalance(tokenAddress, address)
 		if err != nil {
 			log.Error().Err(err).Msg("GetTokenBalance error")
 			continue
@@ -551,14 +551,14 @@ func (service Service) GetAndSetDelegatedStakesMetrics() error {
 
 		metricsList = append(metricsList, lockedTokensMetric)
 
-		stakedTokensTransferredToL2, err := stringToGRT(ds.StakedTokensTransferredToL2)
-		if err != nil {
-			fmt.Println(err)
-		}
-		stakedTokensTransferredToL2Metric := fmt.Sprintf(`thegraph_delegatedstake_stakedtokenstransferredtol2{indexer="%s",delegator="%s"}`, ds.Indexer.ID, ds.Delegator.ID)
-		service.Metrics.GetOrCreateCounter(stakedTokensTransferredToL2Metric).Set(stakedTokensTransferredToL2.Uint64())
+		// stakedTokensTransferredToL2, err := stringToGRT(ds.StakedTokensTransferredToL2)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// }
+		// stakedTokensTransferredToL2Metric := fmt.Sprintf(`thegraph_delegatedstake_stakedtokenstransferredtol2{indexer="%s",delegator="%s"}`, ds.Indexer.ID, ds.Delegator.ID)
+		// service.Metrics.GetOrCreateCounter(stakedTokensTransferredToL2Metric).Set(stakedTokensTransferredToL2.Uint64())
 
-		metricsList = append(metricsList, stakedTokensTransferredToL2Metric)
+		// metricsList = append(metricsList, stakedTokensTransferredToL2Metric)
 
 		realizedRewards, err := strFloatToBigInt(ds.RealizedRewards)
 		if err != nil {

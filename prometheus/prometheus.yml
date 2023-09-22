@@ -23,6 +23,12 @@ scrape_configs:
     static_configs:
       - targets: ['thegraph-exporter:8080']
 
+  - job_name: 'thegraph-exporter-arbitrum'
+    scrape_interval: 50s
+    static_configs:
+      - targets: ['thegraph-exporter-arbitrum:8080']
+
+
 #  - job_name: 'nginx'
 #    scrape_interval: 10s
 #    static_configs:

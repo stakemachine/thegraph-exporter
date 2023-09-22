@@ -249,14 +249,15 @@ func (gs *GraphService) GetCurators() ([]Curator, error) {
 }
 
 // GetAllTokenLockWallets gets info from tokenlock subgraph only
-func (gs *GraphService) GetAllTokenLockWallets() ([]TokenLockWallet, error) {
+func (gs *GraphService) GetAllTokenLockWallets(tokenAddress string) ([]TokenLockWallet, error) {
 	variables := map[string]interface{}{
-		"limit":  graphql.Int(1000),
-		"lastID": graphql.String(""),
+		"limit":        graphql.Int(1000),
+		"tokenAddress": graphql.String(tokenAddress),
+		"lastID":       graphql.String(""),
 	}
 
 	var q struct {
-		TokenLockWallets []TokenLockWallet `graphql:"tokenLockWallets(first: $limit, where: { id_gt: $lastID  })"`
+		TokenLockWallets []TokenLockWallet `graphql:"tokenLockWallets(first: $limit, where: { token: $tokenAddress, id_gt: $lastID  })"`
 	}
 	var tokenLockWallets []TokenLockWallet
 	var err error
@@ -268,11 +269,11 @@ func (gs *GraphService) GetAllTokenLockWallets() ([]TokenLockWallet, error) {
 		}
 		skip += 1000
 		tokenLockWallets = append(tokenLockWallets, q.TokenLockWallets...)
-		variables["lastID"] = graphql.String(tokenLockWallets[len(tokenLockWallets)-1].ID)
 		log.Debug().Msgf("TokenLockWallets pagination: %d", skip)
 		if len(q.TokenLockWallets) == 0 || len(q.TokenLockWallets) < 1000 {
 			break
 		}
+		variables["lastID"] = graphql.String(tokenLockWallets[len(tokenLockWallets)-1].ID)
 		time.Sleep(2 * time.Second)
 	}
 	if err != nil {

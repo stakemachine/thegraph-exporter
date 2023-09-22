@@ -11,16 +11,16 @@ import (
 )
 
 // GetRewards get rewards
-func (es *EthService) GetRewards(alloID string) (*hexutil.Big, error) {
-	contractAddress := common.HexToAddress("0x9Ac758AB77733b4150A901ebd659cbF8cB93ED66")
+func (es *EthService) GetRewards(alloID, rewardsManagerContractAddress string) (*hexutil.Big, error) {
+	contractAddress := common.HexToAddress(rewardsManagerContractAddress)
 	allocationID := common.HexToAddress(alloID)
 	instance, err := rewards.NewRewards(contractAddress, es.Client)
 	if err != nil {
-		return nil, errors.New("allocation ID: " + allocationID.String() + err.Error())
+		return nil, errors.New("allocation ID: " + allocationID.String() + " " + err.Error())
 	}
 	balance, err := instance.GetRewards(&bind.CallOpts{}, allocationID)
 	if err != nil {
-		return nil, errors.New("allocation ID: " + allocationID.String() + err.Error())
+		return nil, errors.New("allocation ID: " + allocationID.String() + " " + err.Error())
 	}
 	return (*hexutil.Big)(balance), nil
 }
