@@ -88,9 +88,9 @@ services:
         hard: 65536
     environment:
       - THEGRAPH_EXPORTER_NETWORK_SUBGRAPH=https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum
-      - THEGRAPH_EXPORTER_ETH_NODE=${ARBITRUM_NODE:-"https://arb1.arbitrum.io/rpc"}
+      - THEGRAPH_EXPORTER_ETH_NODE=${ARBITRUM_NODE:-https://arb1.arbitrum.io/rpc}
       - THEGRAPH_EXPORTER_REWARDS_MANAGER=${ARBITRUM_REWARDS_MANAGER:-0x971B9d3d0Ae3ECa029CAB5eA1fB0F72c85e6a525}
-      - THEGRAPH_EXPORTER_TOKEN_ADDRESS=${ARBITRUM_TOKEN_ADDRESS:-"0x9623063377AD1B27544C965cCd7342f7EA7e88C7"}
+      - THEGRAPH_EXPORTER_TOKEN_ADDRESS=${ARBITRUM_TOKEN_ADDRESS:-0x9623063377AD1B27544C965cCd7342f7EA7e88C7}
     networks:
       - exporter-net
     logging: *default-logging
