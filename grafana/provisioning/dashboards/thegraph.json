@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 3,
+  "id": 1,
   "links": [
     {
       "icon": "external link",
@@ -32,20 +35,33 @@
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 94,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "# Delegate to us\n\nYou can support further development by delegating to our mainnet indexer: **stake-machine.eth** (**[0x1692a8710dcf0dce24bd34c028479176b97ee9ef](https://thegraph.com/explorer/profile/0x1692a8710dcf0dce24bd34c028479176b97ee9ef?view=Indexing&chain=mainnet)**) \n\nOur arbitrum indexer: (**[0xe0ceec6daa59cc951f3f71d6fc4221e55ef6c386](https://thegraph.com/explorer/profile/0xe0ceec6daa59cc951f3f71d6fc4221e55ef6c386?view=Indexing&chain=arbitrum-one)**)\n\nAlso you can take a look at our [Indexer Dashboard](https://thegraph.stake-machine.com/d/indexers/thegraph-indexers?orgId=1&refresh=1m&var-indexer=0x1692a8710dcf0dce24bd34c028479176b97ee9ef)",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
           "queryType": "randomWalk",
           "refId": "A"
         }
@@ -73,7 +89,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "hideEmpty": false,
       "hideZero": false,
@@ -97,7 +113,12 @@
       },
       "targets": [
         {
-          "expr": "thegraph_indexers_info{geohash=~\".+\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_indexers_info{geohash=~\".+\",job=~\"$network\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -140,7 +161,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 5
+        "y": 6
       },
       "id": 80,
       "links": [],
@@ -149,6 +170,7 @@
           "calcs": [],
           "displayMode": "table",
           "placement": "right",
+          "showLegend": true,
           "values": ["value", "percent"]
         },
         "pieType": "pie",
@@ -158,44 +180,81 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.3.1",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards{job=~\"$network\"}",
           "instant": true,
           "interval": "",
-          "legendFormat": "Total Indexing Delegator Rewards",
+          "legendFormat": "Total Indexing Delegator Rewards {{job}}",
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "thegraph_graphnetwork_totalindexingindexerrewards",
+          "expr": "thegraph_graphnetwork_totalindexingindexerrewards{job=~\"$network\"}",
           "instant": true,
           "interval": "",
-          "legendFormat": "Total Indexing Indexer Rewards",
+          "legendFormat": "Total Indexing Indexer Rewards {{job}}",
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "thegraph_graphnetwork_totalqueryfees",
+          "expr": "thegraph_graphnetwork_totalqueryfees{job=~\"$network\"}",
           "instant": true,
           "interval": "",
-          "legendFormat": "Total Query Fees",
+          "legendFormat": "Total Query Fees {{job}}",
           "refId": "D"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "thegraph_graphnetwork_totalcuratorqueryfees",
+          "expr": "thegraph_graphnetwork_totalcuratorqueryfees{job=~\"$network\"}",
           "instant": true,
           "interval": "",
-          "legendFormat": "Total Curator Query Fees",
+          "legendFormat": "Total Curator Query Fees {{job}}",
           "refId": "C"
         }
       ],
       "title": "Total Network Rewards",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "piechart"
     },
     {
@@ -208,10 +267,19 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "id": 74,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Totals",
       "type": "row"
     },
@@ -239,9 +307,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 8,
+        "w": 6,
         "x": 0,
-        "y": 15
+        "y": 16
       },
       "id": 42,
       "options": {
@@ -257,16 +325,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltokensstaked{job=~\"$network\"} + thegraph_graphnetwork_totaldelegatedtokens{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "GRT",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Tokens Staked (GRT)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -293,9 +383,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 15
+        "w": 6,
+        "x": 6,
+        "y": 16
       },
       "id": 62,
       "options": {
@@ -311,69 +401,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexingrewards",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalindexingrewards{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "GRT",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Indexing Rewards (GRT)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 15
-      },
-      "id": 8,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
+      "transformations": [
         {
-          "expr": "sum(thegraph_allocations_active)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
         }
       ],
-      "title": "Total Unallocated Rewards",
       "type": "stat"
     },
     {
@@ -399,9 +458,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 15
+        "w": 6,
+        "x": 12,
+        "y": 16
       },
       "id": 32,
       "options": {
@@ -417,294 +476,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalsupply",
-          "interval": "",
-          "legendFormat": "GRT",
-          "refId": "A"
-        }
-      ],
-      "title": "Total GRT Supply (GRT)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 15
-      },
-      "id": 115,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalsupply * thegraph_grt_usd",
-          "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
-        }
-      ],
-      "title": "Total GRT Supply (USD)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "The total amount of GRT staked in the staking contract",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 19
-      },
-      "id": 121,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": ["diff"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens",
-          "interval": "",
-          "legendFormat": "GRT",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Staked Amount Changed",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "The total amount of GRT staked in the staking contract",
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 2,
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 19
-      },
-      "id": 123,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": ["last"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PABDA7AB1AD2A1489"
           },
-          "exemplar": false,
-          "expr": "(sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) - (sum(thegraph_graphnetwork_totaltokensstaked offset $__range_s + thegraph_graphnetwork_totaldelegatedtokens offset $__range_s))) / sum(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)",
-          "instant": true,
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalsupply{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "GRT",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Staked % Changed",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "The total amount of GRT staked in the staking contract",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 19
-      },
-      "id": 113,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
+      "title": "Total GRT Supply (GRT)",
+      "transformations": [
         {
-          "expr": "(thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens) * thegraph_grt_usd",
-          "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
         }
       ],
-      "title": "Total Tokens Staked (USD)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Total indexing rewards earned. Including delegators and indexers parts",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 19
-      },
-      "id": 114,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalindexingrewards * thegraph_grt_usd",
-          "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
-        }
-      ],
-      "title": "Total Indexing Rewards (USD)",
       "type": "stat"
     },
     {
@@ -730,62 +533,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 19
-      },
-      "id": 36,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalgrtminted",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total GRT Minted",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 19
+        "w": 6,
+        "x": 18,
+        "y": 16
       },
       "id": 34,
       "options": {
@@ -801,16 +551,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalgrtburned",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalgrtburned{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total GRT Burned",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -818,7 +590,7 @@
         "type": "prometheus",
         "uid": "PABDA7AB1AD2A1489"
       },
-      "description": "Total stake of all indexers on all Subgraph deployments",
+      "description": "The total amount of GRT staked in the staking contract",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -837,35 +609,56 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 23
+        "y": 20
       },
-      "id": 97,
+      "id": 121,
       "options": {
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "vertical",
         "reduceOptions": {
-          "calcs": ["last"],
+          "calcs": ["diff"],
           "fields": "",
           "values": false
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "sum(thegraph_subgraph_deployment_tokens_staked)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltokensstaked{job=~\"$network\"} + thegraph_graphnetwork_totaldelegatedtokens{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "Token Staked",
-          "queryType": "randomWalk",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Tokens Staked in Subgraphs",
+      "title": "Total Tokens Staked Amount Changed",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -892,9 +685,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 23
+        "w": 6,
+        "x": 6,
+        "y": 20
       },
       "id": 46,
       "options": {
@@ -910,69 +703,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalunstakedtokenslocked",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalunstakedtokenslocked{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Unstaked Tokens Locked",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 23
-      },
-      "id": 30,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
+      "transformations": [
         {
-          "expr": "thegraph_graphnetwork_currentepoch",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
         }
       ],
-      "title": "Current Epoch",
       "type": "stat"
     },
     {
@@ -998,9 +760,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 6,
         "x": 12,
-        "y": 23
+        "y": 20
       },
       "id": 76,
       "options": {
@@ -1016,16 +778,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totaltaxedqueryfees",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltaxedqueryfees{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Taxed Query Fees",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1033,6 +817,7 @@
         "type": "prometheus",
         "uid": "PABDA7AB1AD2A1489"
       },
+      "description": "Total tokens that are settled and waiting to be claimed",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1044,18 +829,17 @@
                 "value": null
               }
             ]
-          },
-          "unit": "locale"
+          }
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 23
+        "w": 6,
+        "x": 18,
+        "y": 20
       },
-      "id": 82,
+      "id": 38,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1069,72 +853,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalunclaimedqueryfeerebates",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Unclaimed Query Fees Rebate",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Price from Coingecko",
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 6,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
           },
-          "unit": "currencyUSD"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 23
-      },
-      "id": 106,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_grt_usd",
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltokensclaimable{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "GRT/USD",
+      "title": "Total Tokens Claimable",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1161,9 +911,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 27
+        "y": 24
       },
       "id": 44,
       "options": {
@@ -1179,803 +929,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaltokensallocated",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Allocated",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 27
-      },
-      "id": 6,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["last"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_allocations_active_count",
-          "interval": "",
-          "legendFormat": "Number of active allocations",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Active Allocations",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 27
-      },
-      "id": 28,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_subgraphcount",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Subgraphs",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 27
-      },
-      "id": 112,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["last"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalsupply * 0.03 / (thegraph_graphnetwork_totaltokensstaked + thegraph_graphnetwork_totaldelegatedtokens)",
-          "interval": "",
-          "legendFormat": "APY",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Inflation APY",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Total tokens that are settled and waiting to be claimed",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 27
-      },
-      "id": 38,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaltokensclaimable",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Claimable",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Price from Coingecko",
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 2,
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 27
-      },
-      "id": 122,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["last"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PABDA7AB1AD2A1489"
           },
-          "exemplar": true,
-          "expr": "(thegraph_grt_usd - thegraph_grt_usd offset $__range_s) / thegraph_grt_usd",
-          "instant": false,
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltokensallocated{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "GRT/USD Change",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 31
-      },
-      "id": 70,
-      "panels": [],
-      "title": "Delegators",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 32
-      },
-      "id": 22,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
+      "title": "Total Tokens Allocated",
+      "transformations": [
         {
-          "exemplar": true,
-          "expr": "thegraph_graphnetwork_delegatorcount",
-          "interval": "",
-          "legendFormat": "Total",
-          "refId": "A"
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
         },
         {
-          "exemplar": true,
-          "expr": "count(thegraph_delegator_tokens_staked)",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Active",
-          "refId": "B"
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
         }
       ],
-      "title": "Delegators",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Total query fees rebates claimed by delegators",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 32
-      },
-      "id": 52,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaldelegatorqueryfeerebates",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Delegator Query Fee Rebates",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 32
-      },
-      "id": 58,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards",
-          "interval": "",
-          "legendFormat": "GRT",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Indexing Delegators Rewards (GRT)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 32
-      },
-      "id": 116,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards * thegraph_grt_usd",
-          "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
-        }
-      ],
-      "title": "Total Indexing Delegators Rewards (USD)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Total delegated tokens in the protocol",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 32
-      },
-      "id": 50,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaldelegatedtokens",
-          "interval": "",
-          "legendFormat": "GRT",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Delegated Tokens (GRT)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Total delegated tokens in the protocol",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 32
-      },
-      "id": 117,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaldelegatedtokens * thegraph_grt_usd",
-          "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
-        }
-      ],
-      "title": "Total Delegated Tokens (USD)",
-      "type": "stat"
-    },
-    {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": "0.01"
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fontSize": "80%",
-      "format": "short",
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 36
-      },
-      "id": 90,
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "values": true
-      },
-      "legendType": "Right side",
-      "links": [],
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "pluginVersion": "7.3.1",
-      "strokeWidth": 1,
-      "targets": [
-        {
-          "expr": "sum by (delegator)(thegraph_delegatedstake_tokens_staked)",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{delegator}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Delegators",
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": "0.01"
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fontSize": "80%",
-      "format": "percentunit",
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 44
-      },
-      "id": 110,
-      "legend": {
-        "percentage": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "values": true
-      },
-      "legendType": "Right side",
-      "links": [],
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "pluginVersion": "7.3.1",
-      "strokeWidth": 1,
-      "targets": [
-        {
-          "expr": "sum by (delegator)(thegraph_delegatedstake_rewards_unrealized) / sum by (delegator)(thegraph_delegatedstake_tokens_staked)",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{delegator}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Unrealized Delegators Yield",
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 52
-      },
-      "id": 68,
-      "panels": [],
-      "title": "Indexers",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 53
-      },
-      "id": 95,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "thegraph_graphnetwork_totaltokensstaked",
-          "interval": "",
-          "legendFormat": "GRT",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Indexers Staked (GRT)",
       "type": "stat"
     },
     {
@@ -2003,32 +988,54 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 53
+        "y": 24
       },
-      "id": 118,
+      "id": 6,
       "options": {
-        "colorMode": "background",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "vertical",
+        "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": ["last"],
           "fields": "",
           "values": false
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totaltokensstaked * thegraph_grt_usd",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_allocations_active_count{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Total Indexers Staked (USD)",
+      "title": "Total Active Allocations",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2039,6 +1046,8 @@
       "fieldConfig": {
         "defaults": {
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2048,7 +1057,7 @@
               }
             ]
           },
-          "unit": "locale"
+          "unit": "percentunit"
         },
         "overrides": []
       },
@@ -2056,32 +1065,55 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 53
+        "y": 24
       },
-      "id": 60,
+      "id": 112,
       "options": {
-        "colorMode": "background",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "vertical",
+        "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": ["last"],
           "fields": "",
           "values": false
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexingindexerrewards",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalsupply{job=~\"$network\"} * 0.03 / (thegraph_graphnetwork_totaltokensstaked{job=~\"$network\"} + thegraph_graphnetwork_totaldelegatedtokens{job=~\"$network\"})",
           "interval": "",
-          "legendFormat": "GRT",
+          "legendFormat": "{{job}}",
+          "queryType": "randomWalk",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Indexing Indexer Rewards (GRT)",
+      "title": "Inflation APY",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2109,9 +1141,663 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 53
+        "y": 24
       },
-      "id": 119,
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_currentepoch{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Current Epoch",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 28
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_subgraphcount{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Subgraphs",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 28
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalgrtminted{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total GRT Minted",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 28
+      },
+      "id": 82,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalunclaimedqueryfeerebates{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Unclaimed Query Fees Rebate",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 70,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Delegators",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 33
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "thegraph_graphnetwork_delegatorcount{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Delegator count",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "description": "Total query fees rebates claimed by delegators",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 33
+      },
+      "id": 52,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaldelegatorqueryfeerebates{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Delegator Query Fee Rebates",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 33
+      },
+      "id": 58,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalindexingdelegatorrewards{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Indexing Delegators Rewards (GRT)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "description": "Total delegated tokens in the protocol",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 33
+      },
+      "id": 50,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaldelegatedtokens{job=~\"$network\"}",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Delegated Tokens (GRT)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 68,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Indexers",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 38
+      },
+      "id": 95,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -2125,131 +1811,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexingindexerrewards * thegraph_grt_usd",
-          "interval": "",
-          "legendFormat": "USD",
-          "refId": "B"
-        }
-      ],
-      "title": "Total Indexing Indexer Rewards (USD)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
           },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 0,
-        "y": 57
-      },
-      "id": 24,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "thegraph_graphnetwork_indexercount",
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltokensstaked{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "Total",
-          "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "count(group by (indexer) (thegraph_indexer_tokens_staked))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Active",
-          "refId": "B"
-        }
-      ],
-      "title": "Indexers",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 5,
-        "y": 57
-      },
-      "id": 12,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "count(count by (indexer) (thegraph_allocations_active))",
-          "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Active Indexers",
+      "title": "Total Indexers Staked (GRT)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2275,9 +1868,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 10,
-        "y": 57
+        "w": 6,
+        "x": 6,
+        "y": 38
       },
       "id": 26,
       "options": {
@@ -2293,16 +1886,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_stakedindexerscount",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_stakedindexerscount{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Indexer Staked Total",
+      "title": "Staked Indexers Count",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2310,7 +1925,6 @@
         "type": "prometheus",
         "uid": "PABDA7AB1AD2A1489"
       },
-      "description": "Total query fees rebates claimed by indexers",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -2329,16 +1943,16 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 15,
-        "y": 57
+        "w": 6,
+        "x": 12,
+        "y": 38
       },
-      "id": 54,
+      "id": 60,
       "options": {
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "vertical",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
@@ -2347,16 +1961,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexerqueryfeerebates",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalindexingindexerrewards{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Indexer Query Fee Rebates",
+      "title": "Total Indexing Indexer Rewards (GRT)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2383,9 +2019,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 20,
-        "y": 57
+        "w": 6,
+        "x": 18,
+        "y": 38
       },
       "id": 56,
       "options": {
@@ -2401,109 +2037,191 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalindexerqueryfeescollected",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalindexerqueryfeescollected{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Indexer Query Fees Collected",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": "0.01"
-      },
       "datasource": {
         "type": "prometheus",
         "uid": "PABDA7AB1AD2A1489"
       },
-      "fontSize": "80%",
-      "format": "short",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 4,
+        "w": 6,
         "x": 0,
-        "y": 61
+        "y": 42
       },
-      "id": 88,
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "values": true
+      "id": 24,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
       },
-      "legendType": "Right side",
-      "links": [],
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "pluginVersion": "7.3.1",
-      "strokeWidth": 1,
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_indexer_capacity_token",
-          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "thegraph_graphnetwork_indexercount{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "{{indexer}}",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total tokens Indexers control",
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
+      "title": "Indexer count",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
     },
     {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": "0.01"
-      },
       "datasource": {
         "type": "prometheus",
         "uid": "PABDA7AB1AD2A1489"
       },
-      "fontSize": "80%",
-      "format": "short",
+      "description": "Total query fees rebates claimed by indexers",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 61
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 42
       },
-      "id": 86,
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "values": true
+      "id": 54,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
       },
-      "legendType": "Right side",
-      "links": [],
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "pluginVersion": "7.3.1",
-      "strokeWidth": 1,
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_indexer_rewards_earned",
-          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalindexerqueryfeerebates{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "{{indexer}}",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Indexers Collected Rewards",
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
+      "title": "Total Indexer Query Fee Rebates",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
+      "type": "stat"
     },
     {
       "collapsed": false,
@@ -2515,10 +2233,19 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 69
+        "y": 46
       },
       "id": 72,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Curators",
       "type": "row"
     },
@@ -2536,10 +2263,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -2548,9 +2271,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 70
+        "y": 47
       },
       "id": 20,
       "options": {
@@ -2566,16 +2289,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_curatorcount",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_curatorcount{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Curators",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2601,9 +2346,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 70
+        "w": 6,
+        "x": 6,
+        "y": 47
       },
       "id": 48,
       "options": {
@@ -2619,16 +2364,38 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totalcuratorqueryfees",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totalcuratorqueryfees{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Curator Query Fees",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -2654,9 +2421,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 70
+        "w": 6,
+        "x": 12,
+        "y": 47
       },
       "id": 40,
       "options": {
@@ -2672,611 +2439,76 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.1",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
-          "expr": "thegraph_graphnetwork_totaltokensignalled",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "editorMode": "code",
+          "expr": "thegraph_graphnetwork_totaltokensignalled{job=~\"$network\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Tokens Signalled",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 12,
-        "y": 70
-      },
-      "id": 103,
-      "links": [],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
+      "transformations": [
         {
-          "expr": "sum(thegraph_curator_tokens_unsignalled)",
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Unsignalled",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 15,
-        "y": 70
-      },
-      "id": 104,
-      "links": [],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "sum(thegraph_curator_tokens_signalled)",
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Signalled",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "description": "Total name signal summed for all bonding curves",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 18,
-        "y": 70
-      },
-      "id": 99,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "sum(thegraph_curator_namesignal_total)",
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Name Signals",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 74
-      },
-      "id": 101,
-      "links": [],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "sum(thegraph_curator_tokens_namesignalled)",
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Name Signalled",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 74
-      },
-      "id": 102,
-      "links": [],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "expr": "sum(thegraph_curator_tokens_nameunsignalled)",
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Tokens Name Unsignalled",
-      "type": "stat"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 78
-      },
-      "id": 108,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PABDA7AB1AD2A1489"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "unit": "GRT"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 28
-          },
-          "hiddenSeries": false,
-          "id": 10,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
+          "id": "renameByRegex",
           "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(thegraph_allocations_active) by (indexer)",
-              "interval": "",
-              "legendFormat": "{{indexer}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeRegions": [],
-          "title": "Uncollected Rewards by Indexers",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "GRT",
-              "logBase": 1,
-              "show": true
-            },
-            {
-              "format": "short",
-              "logBase": 1,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false
+            "regex": "/thegraph-exporter-arbitrum/",
+            "renamePattern": "arbitrum"
           }
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PABDA7AB1AD2A1489"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "unit": "GRT"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 36
-          },
-          "hiddenSeries": false,
-          "id": 14,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null as zero",
+          "id": "renameByRegex",
           "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "3600 * sum by (indexer)(rate(thegraph_allocations_active[1h]))",
-              "interval": "",
-              "legendFormat": "{{indexer}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeRegions": [],
-          "title": "Indexers Reward Rate per Hour",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "GRT",
-              "logBase": 1,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "logBase": 1,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false
+            "regex": "/thegraph-exporter/",
+            "renamePattern": "mainnet"
           }
         }
       ],
-      "title": "Indexer Rewards",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 79
-      },
-      "id": 78,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PABDA7AB1AD2A1489"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "unit": "GRT"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 9,
-            "w": 24,
-            "x": 0,
-            "y": 67
-          },
-          "hiddenSeries": false,
-          "id": 2,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "thegraph_allocations_active",
-              "interval": "",
-              "legendFormat": "{{allocation}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeRegions": [],
-          "title": "Uncollected Rewards per Active Allocation",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "GRT",
-              "logBase": 1,
-              "show": true
-            },
-            {
-              "format": "short",
-              "logBase": 1,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false
-          }
-        }
-      ],
-      "title": "Allocations",
-      "type": "row"
+      "type": "stat"
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 33,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": ["mainnet", "arbitrum"],
+          "value": ["thegraph-exporter", "thegraph-exporter-arbitrum"]
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Network",
+        "multi": true,
+        "name": "network",
+        "options": [
+          {
+            "selected": true,
+            "text": "mainnet",
+            "value": "thegraph-exporter"
+          },
+          {
+            "selected": true,
+            "text": "arbitrum",
+            "value": "thegraph-exporter-arbitrum"
+          }
+        ],
+        "query": "mainnet : thegraph-exporter, arbitrum : thegraph-exporter-arbitrum",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
   },
   "time": {
     "from": "now-24h",
@@ -3286,6 +2518,6 @@
   "timezone": "",
   "title": "TheGraph - Overview",
   "uid": "-3BUUtbMz",
-  "version": 56,
+  "version": 6,
   "weekStart": ""
 }
