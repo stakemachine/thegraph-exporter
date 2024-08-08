@@ -1,9 +1,9 @@
-FROM golang:1.21.1-alpine as builder
+FROM golang:1.22.6-alpine as builder
 
 RUN apk update && apk add --no-cache git ca-certificates tzdata && update-ca-certificates
 
-RUN wget https://github.com/upx/upx/releases/download/v4.1.0/upx-4.1.0-amd64_linux.tar.xz -O /tmp/upx-4.1.0-amd64_linux.tar.xz && \
-    tar -xJOf /tmp/upx-4.1.0-amd64_linux.tar.xz upx-4.1.0-amd64_linux/upx > /usr/local/bin/upx && \
+RUN wget https://github.com/upx/upx/releases/download/v4.2.4/upx-4.2.4-amd64_linux.tar.xz -O /tmp/upx-4.2.4-amd64_linux.tar.xz && \
+    tar -xJOf /tmp/upx-4.2.4-amd64_linux.tar.xz upx-4.2.4-amd64_linux/upx > /usr/local/bin/upx && \
     chmod +x /usr/local/bin/upx
 
 ENV USER=thegraph
