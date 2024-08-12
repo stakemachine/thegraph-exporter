@@ -24,9 +24,23 @@ func metricExists(a string, list []string) bool {
 }
 
 func (service Service) clearOldMetrics(oldList, newList *[]string, metricPrefix string) {
-	for _, om := range *oldList {
-		if !metricExists(om, *newList) {
-			if strings.HasPrefix(om, metricPrefix) {
+	// Use a map with preallocated size to optimize memory usage
+	newMetrics := make(map[string]struct{}, len(*newList))
+	for _, metric := range *newList {
+		newMetrics[metric] = struct{}{}
+	}
+
+	// Process oldList in batches to avoid high memory consumption
+	batchSize := 10000
+	for start := 0; start < len(*oldList); start += batchSize {
+		end := start + batchSize
+		if end > len(*oldList) {
+			end = len(*oldList)
+		}
+		batch := (*oldList)[start:end]
+
+		for _, om := range batch {
+			if _, exists := newMetrics[om]; !exists && strings.HasPrefix(om, metricPrefix) {
 				if service.Metrics.UnregisterMetric(om) {
 					log.Debug().Msgf("unregistered metric: %s", om)
 				} else {
