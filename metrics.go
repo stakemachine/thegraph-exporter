@@ -55,6 +55,7 @@ func (service Service) GetAndSetActiveAllocationsRewardsMetrics(rewardsManagerCo
 			log.Error().Err(err).Msg("GetRewards error")
 			continue // fmt.Println(err)
 		}
+		alloNetwork := allo.Manifest.Network
 		grtDec := big.NewInt(1000000000000000000)
 		normalizedReward := rewards.ToInt().Quo(rewards.ToInt(), grtDec)
 		totalActiveRewards.Add(totalActiveRewards, normalizedReward)
@@ -63,7 +64,7 @@ func (service Service) GetAndSetActiveAllocationsRewardsMetrics(rewardsManagerCo
 		if err != nil {
 			return err
 		}
-		s := fmt.Sprintf(`thegraph_allocations_active{allocation="%s",indexer="%s",ipfs_hash="%s"}`, allo.ID, allo.Indexer.ID, subgraphDeploymentID)
+		s := fmt.Sprintf(`thegraph_allocations_active{allocation="%s",indexer="%s",ipfs_hash="%s",network="%s"}`, allo.ID, allo.Indexer.ID, subgraphDeploymentID, alloNetwork)
 		service.Metrics.GetOrCreateCounter(s).Set(normalizedReward.Uint64())
 		metricsList = append(metricsList, s)
 	}
@@ -680,6 +681,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 	for _, subgraphDeployment := range subgraphDeployments {
 		subgraphName := subgraphDeployment.OriginalName
 		subgraphHex := subgraphDeployment.ID
+		subgraphNetwork := subgraphDeployment.Manifest.Network
 		stakedTokens, err := stringToGRT(subgraphDeployment.StakedTokens)
 		if err != nil {
 			log.Error().Err(err)
@@ -688,7 +690,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		stakedTokensMetric := fmt.Sprintf(`thegraph_subgraph_deployment_tokens_staked{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		stakedTokensMetric := fmt.Sprintf(`thegraph_subgraph_deployment_tokens_staked{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(stakedTokensMetric).Set(stakedTokens.Uint64())
 
 		metricsList = append(metricsList, stakedTokensMetric)
@@ -697,7 +699,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		indexingRewardAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_rewards_total{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		indexingRewardAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_rewards_total{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(indexingRewardAmountMetric).Set(indexingRewardAmount.Uint64())
 
 		metricsList = append(metricsList, indexingRewardAmountMetric)
@@ -706,7 +708,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		indexingIndexerRewardAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_rewards_indexer{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		indexingIndexerRewardAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_rewards_indexer{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(indexingIndexerRewardAmountMetric).Set(indexingIndexerRewardAmount.Uint64())
 
 		metricsList = append(metricsList, indexingIndexerRewardAmountMetric)
@@ -715,7 +717,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		indexingDelegatorRewardAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_rewards_delegator{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		indexingDelegatorRewardAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_rewards_delegator{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(indexingDelegatorRewardAmountMetric).Set(indexingDelegatorRewardAmount.Uint64())
 
 		metricsList = append(metricsList, indexingDelegatorRewardAmountMetric)
@@ -724,7 +726,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		queryFeesAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_query_fees{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		queryFeesAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_query_fees{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(queryFeesAmountMetric).Set(queryFeesAmount.Uint64())
 
 		metricsList = append(metricsList, queryFeesAmountMetric)
@@ -733,7 +735,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		queryFeeRebatesMetric := fmt.Sprintf(`thegraph_subgraph_deployment_query_fees_rebates{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		queryFeeRebatesMetric := fmt.Sprintf(`thegraph_subgraph_deployment_query_fees_rebates{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(queryFeeRebatesMetric).Set(queryFeeRebates.Uint64())
 
 		metricsList = append(metricsList, queryFeeRebatesMetric)
@@ -742,7 +744,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		curatorFeeRewardsMetric := fmt.Sprintf(`thegraph_subgraph_deployment_query_fees_curators{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		curatorFeeRewardsMetric := fmt.Sprintf(`thegraph_subgraph_deployment_query_fees_curators{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(curatorFeeRewardsMetric).Set(curatorFeeRewards.Uint64())
 
 		metricsList = append(metricsList, curatorFeeRewardsMetric)
@@ -751,7 +753,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		signalledTokensMetric := fmt.Sprintf(`thegraph_subgraph_deployment_tokens_signalled{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		signalledTokensMetric := fmt.Sprintf(`thegraph_subgraph_deployment_tokens_signalled{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(signalledTokensMetric).Set(signalledTokens.Uint64())
 
 		metricsList = append(metricsList, signalledTokensMetric)
@@ -760,7 +762,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
-		unsignalledTokensMetric := fmt.Sprintf(`thegraph_subgraph_deployment_tokens_unsignalled{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		unsignalledTokensMetric := fmt.Sprintf(`thegraph_subgraph_deployment_tokens_unsignalled{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(unsignalledTokensMetric).Set(unsignalledTokens.Uint64())
 
 		metricsList = append(metricsList, unsignalledTokensMetric)
@@ -771,7 +773,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 			return fmt.Errorf("SetString failed")
 		}
 
-		signalAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_signal_amount{name="%s",id="%s",ipfs_hash="%s"}`, subgraphName, subgraphHex, subgraphHash)
+		signalAmountMetric := fmt.Sprintf(`thegraph_subgraph_deployment_signal_amount{name="%s",id="%s",ipfs_hash="%s",network="%s"}`, subgraphName, subgraphHex, subgraphHash, subgraphNetwork)
 		service.Metrics.GetOrCreateCounter(signalAmountMetric).Set(signalAmount.Uint64())
 
 		metricsList = append(metricsList, signalAmountMetric)

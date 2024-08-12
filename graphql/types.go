@@ -148,6 +148,9 @@ type Allocation struct {
 		ID           string
 		OriginalName string
 	} // Subgraph deployment that is being allocated
+	Manifest struct {
+		Network string
+	}
 	AllocatedTokens          string              // Tokens associated with the allocation
 	EffectiveAllocation      string              // Effective allocation that is realized upon closing
 	CreatedAtEpoch           int                 // Epoch this allocation was created
@@ -235,8 +238,11 @@ type SubgraphDeployment struct {
 	UnsignalledTokens             string // Unsignalled tokens
 	SignalAmount                  string // Current curation signal for this subgraph deployment
 	// CuratorSignals                []Signal            // Curators of this subgraph deployment
-	ReserveRatio        int // Bonding curve reserve ratio
-	IpfsHash            string
+	ReserveRatio int // Bonding curve reserve ratio
+	IpfsHash     string
+	Manifest     struct {
+		Network string
+	}
 	ActiveSubgraphCount int // Amount of active Subgraph entities that are currently using this deployment. Deprecated subgraph entities are not counted
 }
 
