@@ -26,7 +26,7 @@ func Print(v interface{}) {
 // GetIndexers get Indexers
 func (gs *GraphService) GetIndexers() ([]Indexer, error) {
 	variables := map[string]interface{}{
-		"limit":  graphql.Int(1000),
+		"limit":  graphql.Int(10),
 		"lastID": graphql.String(""),
 	}
 	var q struct {
@@ -40,11 +40,11 @@ func (gs *GraphService) GetIndexers() ([]Indexer, error) {
 		if err != nil {
 			return []Indexer{}, err
 		}
-		skip += 1000
+		skip += 10
 		indexers = append(indexers, q.Indexers...)
 		variables["lastID"] = graphql.String(indexers[len(indexers)-1].ID)
 		log.Debug().Msgf("Indexers pagination: %d", skip)
-		if len(q.Indexers) == 0 || len(q.Indexers) < 1000 {
+		if len(q.Indexers) == 0 || len(q.Indexers) < 10 {
 			break
 		}
 		time.Sleep(2 * time.Second)

@@ -165,7 +165,11 @@ func main() {
 			// }
 			// time.Sleep(30 * time.Second)
 			// continue
-			err := clients.GetAndSetSignals()
+			err := clients.GetAndSetIndexerMetrics()
+			if err != nil {
+				log.Error().Err(err).Msg("GetAndSetIndexerMetrics")
+			}
+			err = clients.GetAndSetSignals()
 			if err != nil {
 				log.Error().Err(err).Msg("GetAndSetSignals")
 			}
@@ -200,10 +204,6 @@ func main() {
 			err = clients.GetAndSetDelegatedStakesMetrics()
 			if err != nil {
 				log.Error().Err(err).Msg("GetAndSetDelegatedStakesMetrics")
-			}
-			err = clients.GetAndSetIndexerMetrics()
-			if err != nil {
-				log.Error().Err(err).Msg("GetAndSetIndexerMetrics")
 			}
 			err = clients.GetAndSetActiveAllocationsRewardsMetrics(*rewardsManagerContractAddress)
 			if err != nil {
