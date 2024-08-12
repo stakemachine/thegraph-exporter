@@ -23,9 +23,9 @@ func metricExists(a string, list []string) bool {
 	return false
 }
 
-func (service Service) clearOldMetrics(oldList, newList []string, metricPrefix string) {
-	for _, om := range oldList {
-		if !metricExists(om, newList) {
+func (service Service) clearOldMetrics(oldList, newList *[]string, metricPrefix string) {
+	for _, om := range *oldList {
+		if !metricExists(om, *newList) {
 			if strings.HasPrefix(om, metricPrefix) {
 				if service.Metrics.UnregisterMetric(om) {
 					log.Debug().Msgf("unregistered metric: %s", om)
@@ -74,7 +74,7 @@ func (service Service) GetAndSetActiveAllocationsRewardsMetrics(rewardsManagerCo
 	log.Info().Msgf("Number of active allocations: %d", totalActiveAllocations)
 	service.Metrics.GetOrCreateCounter(totalActiveAllocationsMetric).Set(uint64(totalActiveAllocations))
 	metricsList = append(metricsList, totalActiveAllocationsMetric)
-	service.clearOldMetrics(oldList, metricsList, "thegraph_allocations_active")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_allocations_active")
 	return nil
 }
 
@@ -509,7 +509,7 @@ func (service Service) GetAndSetIndexerMetrics() error {
 		metricsList = append(metricsList, ownStakeRatioMetric)
 
 	}
-	service.clearOldMetrics(oldList, metricsList, "thegraph_indexer")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_indexer")
 
 	return nil
 }
@@ -616,7 +616,7 @@ func (service Service) GetAndSetDelegatedStakesMetrics() error {
 		metricsList = append(metricsList, unrealizedRewardsMetric)
 
 	}
-	service.clearOldMetrics(oldList, metricsList, "thegraph_delegatedstake")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_delegatedstake")
 
 	return nil
 }
@@ -663,7 +663,7 @@ func (service Service) GetAndSetDelegatorMetrics() error {
 
 	}
 
-	service.clearOldMetrics(oldList, metricsList, "thegraph_delegator")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_delegator")
 
 	return nil
 }
@@ -780,7 +780,7 @@ func (service Service) GetAndSetSubgraphDeploymentMetrics() error {
 
 	}
 
-	service.clearOldMetrics(oldList, metricsList, "thegraph_subgraph")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_subgraph")
 
 	return nil
 }
@@ -881,7 +881,7 @@ func (service Service) GetAndSetCurators() error {
 
 	}
 
-	service.clearOldMetrics(oldList, metricsList, "thegraph_curator")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_curator")
 
 	return nil
 }
@@ -966,7 +966,7 @@ func (service Service) GetAndSetSignals() error {
 		metricsList = append(metricsList, signalSignalAmount)
 
 	}
-	service.clearOldMetrics(oldList, metricsList, "thegraph_signal")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_signal")
 
 	return nil
 }
@@ -1022,7 +1022,7 @@ func (service Service) GetAndSetNameSignals() error {
 		metricsList = append(metricsList, nameSignalSignalAmount)
 
 	}
-	service.clearOldMetrics(oldList, metricsList, "thegraph_namesignal")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_namesignal")
 
 	return nil
 }
@@ -1066,6 +1066,6 @@ func (service Service) GetAndSetIndexerDataPoints() error {
 		metricsList = append(metricsList, queryCount)
 
 	}
-	service.clearOldMetrics(oldList, metricsList, "thegraph_indexerdatapoint")
+	service.clearOldMetrics(&oldList, &metricsList, "thegraph_indexerdatapoint")
 	return nil
 }
