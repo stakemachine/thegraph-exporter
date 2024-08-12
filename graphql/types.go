@@ -144,13 +144,8 @@ type Allocation struct {
 	// WAS REMOVED 28.01.2021 Price              string              // Price of the queries
 	Indexer            struct{ ID string } // Indexer of this allocation
 	ActiveForIndexer   struct{ ID string } // Indexer            // Indexer where this allocation is active
-	SubgraphDeployment struct {
-		ID           string
-		OriginalName string
-	} // Subgraph deployment that is being allocated
-	Manifest struct {
-		Network string
-	}
+	SubgraphDeployment SubgraphDeployment
+
 	AllocatedTokens          string              // Tokens associated with the allocation
 	EffectiveAllocation      string              // Effective allocation that is realized upon closing
 	CreatedAtEpoch           int                 // Epoch this allocation was created

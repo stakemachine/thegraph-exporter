@@ -55,7 +55,7 @@ func (service Service) GetAndSetActiveAllocationsRewardsMetrics(rewardsManagerCo
 			log.Error().Err(err).Msg("GetRewards error")
 			continue // fmt.Println(err)
 		}
-		alloNetwork := allo.Manifest.Network
+		alloNetwork := allo.SubgraphDeployment.Manifest.Network
 		grtDec := big.NewInt(1000000000000000000)
 		normalizedReward := rewards.ToInt().Quo(rewards.ToInt(), grtDec)
 		totalActiveRewards.Add(totalActiveRewards, normalizedReward)
@@ -923,11 +923,12 @@ func (service Service) GetAndSetSignals() error {
 		if err != nil {
 			log.Error().Err(err)
 		}
+		signalNetwork := signal.SubgraphDeployment.Manifest.Network
 		signalledTokens, err := utils.ToDecimal(signal.SignalledTokens, 18)
 		if err != nil {
 			return err
 		}
-		signalSignalledTokens := fmt.Sprintf(`thegraph_signal_signalled_tokens{id="%s",curator="%s", subgraphDeployment="%s"}`, signal.ID, signal.Curator.ID, subgraphHash)
+		signalSignalledTokens := fmt.Sprintf(`thegraph_signal_signalled_tokens{id="%s",curator="%s", subgraphDeployment="%s",network="%s"}`, signal.ID, signal.Curator.ID, subgraphHash, signalNetwork)
 		service.Metrics.GetOrCreateGauge(signalSignalledTokens, func() float64 {
 			res, _ := signalledTokens.Float64()
 			return res
@@ -939,7 +940,7 @@ func (service Service) GetAndSetSignals() error {
 		if err != nil {
 			return err
 		}
-		signalUnsignalledTokens := fmt.Sprintf(`thegraph_signal_unsignalled_tokens{id="%s",curator="%s", subgraphDeployment="%s"}`, signal.ID, signal.Curator.ID, subgraphHash)
+		signalUnsignalledTokens := fmt.Sprintf(`thegraph_signal_unsignalled_tokens{id="%s",curator="%s", subgraphDeployment="%s",network="%s"}`, signal.ID, signal.Curator.ID, subgraphHash, signalNetwork)
 		service.Metrics.GetOrCreateGauge(signalUnsignalledTokens, func() float64 {
 			res, _ := unsignalledTokens.Float64()
 			return res
@@ -956,7 +957,7 @@ func (service Service) GetAndSetSignals() error {
 		if err != nil {
 			return err
 		}
-		signalSignalAmount := fmt.Sprintf(`thegraph_signal_amount{id="%s",curator="%s", subgraphDeployment="%s"}`, signal.ID, signal.Curator.ID, subgraphHash)
+		signalSignalAmount := fmt.Sprintf(`thegraph_signal_amount{id="%s",curator="%s", subgraphDeployment="%s",network="%s"}`, signal.ID, signal.Curator.ID, subgraphHash, signalNetwork)
 		service.Metrics.GetOrCreateGauge(signalSignalAmount, func() float64 {
 			// res, _ := signalAmount.Float64()
 			return signalAmount
@@ -980,6 +981,7 @@ func (service Service) GetAndSetNameSignals() error {
 	var metricsList []string
 
 	for _, nameSignal := range nameSignals {
+		nameSignalNetwork := nameSignal.Subgraph.CurrentVersion.SubgraphDeployment.Manifest.Network
 		subgraphHash, err := utils.SubgraphHexToHash(nameSignal.Subgraph.CurrentVersion.SubgraphDeployment.ID)
 		if err != nil {
 			log.Error().Err(err)
@@ -988,7 +990,7 @@ func (service Service) GetAndSetNameSignals() error {
 		if err != nil {
 			return err
 		}
-		nameSignalSignalledTokens := fmt.Sprintf(`thegraph_namesignal_signalled_tokens{id="%s",curator="%s", subgraphDeployment="%s"}`, nameSignal.ID, nameSignal.Curator.ID, subgraphHash)
+		nameSignalSignalledTokens := fmt.Sprintf(`thegraph_namesignal_signalled_tokens{id="%s",curator="%s", subgraphDeployment="%s",network="%s"}`, nameSignal.ID, nameSignal.Curator.ID, subgraphHash, nameSignalNetwork)
 		service.Metrics.GetOrCreateGauge(nameSignalSignalledTokens, func() float64 {
 			res, _ := nameSignalledTokens.Float64()
 			return res
@@ -1000,7 +1002,7 @@ func (service Service) GetAndSetNameSignals() error {
 		if err != nil {
 			return err
 		}
-		nameSignalUnsignalledTokens := fmt.Sprintf(`thegraph_namesignal_unsignalled_tokens{id="%s",curator="%s", subgraphDeployment="%s"}`, nameSignal.ID, nameSignal.Curator.ID, subgraphHash)
+		nameSignalUnsignalledTokens := fmt.Sprintf(`thegraph_namesignal_unsignalled_tokens{id="%s",curator="%s", subgraphDeployment="%s",network="%s"}`, nameSignal.ID, nameSignal.Curator.ID, subgraphHash, nameSignalNetwork)
 		service.Metrics.GetOrCreateGauge(nameSignalUnsignalledTokens, func() float64 {
 			res, _ := nameUnsignalledTokens.Float64()
 			return res
@@ -1012,7 +1014,7 @@ func (service Service) GetAndSetNameSignals() error {
 		if err != nil {
 			return err
 		}
-		nameSignalSignalAmount := fmt.Sprintf(`thegraph_namesignal_amount{id="%s",curator="%s", subgraphDeployment="%s"}`, nameSignal.ID, nameSignal.Curator.ID, subgraphHash)
+		nameSignalSignalAmount := fmt.Sprintf(`thegraph_namesignal_amount{id="%s",curator="%s", subgraphDeployment="%s",network="%s"}`, nameSignal.ID, nameSignal.Curator.ID, subgraphHash, nameSignalNetwork)
 		service.Metrics.GetOrCreateGauge(nameSignalSignalAmount, func() float64 {
 			return nameSignalAmount
 		})
